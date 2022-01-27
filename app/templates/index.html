@@ -1,0 +1,26 @@
+{% extends "bootstrap/base.html" %} {% block title %} {{ TITLE }} {% endblock %}
+{% block styles %} {{ super() }}
+
+<!-- Custom styles -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+{% endblock %} {% block content %}
+<h1>{{ TITLE }}</h1>
+
+<div id="container">
+  <img id="videoElement" src="{{ url_for('video_feed') }}" />
+  <form id="control">
+    Toggle Detection:
+    <a id="use-model"><button class="btn btn-default">On/Off</button></a>
+  </form>
+</div>
+{% endblock %} {% block scripts %}
+<!-- Imports -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!-- Scripts -->
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='script.js') }}"
+></script>
+
+{{ super() }} {% endblock %}
