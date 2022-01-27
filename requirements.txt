@@ -1,0 +1,9 @@
+Flask==2.0.2
+Flask_Bootstrap==3.3.7.1
+Flask_SQLAlchemy==2.5.1
+matplotlib==3.5.1
+numpy==1.22.0
+opencv_python==4.5.5.62
+Pillow==9.0.0
+pytesseract==0.3.8
+tensorflow==2.7.0
