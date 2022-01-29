@@ -4,6 +4,7 @@ import numpy as np
 import pytesseract as tess
 import matplotlib.pyplot as plt #debug
 import os
+import re
 
 # pytesseract location
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
@@ -118,14 +119,15 @@ def recognize_plate(img, coords):
     #TODO: xmax and ymax are corrrect but xmin and ymin is far from the detection box
     # separate coordinates from box
     # xmin, ymin, xmax, ymax = coords
+    
 
     #DEBUG:
     xmin, ymin, xmax, ymax = coords
 
-    xmin = xmin + 85
-    ymin = ymin + 12
-    xmax = xmax
-    ymax = ymax + 100
+    # xmin = xmin + 85
+    # ymin = ymin + 12
+    # xmax = xmax
+    # ymax = ymax + 100
     # print (xmin , ymin , xmax , ymax)
     #======================
 
