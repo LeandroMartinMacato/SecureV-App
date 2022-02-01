@@ -5,7 +5,12 @@ import pytesseract as tess
 import matplotlib.pyplot as plt #debug
 import os
 import re
+# Building:
+from plate_verification import Car , Verificator
 
+# Initialize
+vehicle = Car("ABY8512")
+verificator = Verificator()
 # pytesseract location
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
 class ObjectDetection:
@@ -78,11 +83,14 @@ class ObjectDetection:
                     # recognize_plate(snap, ocr_boxes) # apply ocr and print text
                     # #===========
 
+
                     try:
                         ''' Try Recognize Plate'''
                         ocr_boxes = np.array(boxes[0])
-                        recognize_plate(snap, ocr_boxes) # apply ocr and print text
+                        # recognize_plate(snap, ocr_boxes) # apply ocr and print text
+                        verificator.verify_car(recognize_plate(snap, ocr_boxes)) # apply ocr and verify
                     except:
+                        print("No Plate Detected...")
                         ''' Except when no plate is available '''
                         continue
 
@@ -135,7 +143,7 @@ def recognize_plate(img, coords):
     box = img[int(ymin)-5:int(ymax)+5, int(xmin)-5:int(xmax)+5] # box will be the subimage that is already cropped to the detected object
 
     
-    # #============================================================================================================
+    #DEBUG:
     # cv2.imshow("Crop Debug", box)
     # cv2.waitKey(0)
     # #============================================================================================================
@@ -207,29 +215,32 @@ def recognize_plate(img, coords):
         # perform another blur on character region
         roi = cv2.medianBlur(roi, 5)
 
-        # try:
-        #     print("Reading Plate Number...")
-        #     text = tess.image_to_string(roi, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
-        #     # clean tesseract text by removing any unwanted blank spaces
-        #     clean_text = re.sub('[\W_]+', '', text)
-        #     plate_num += clean_text
-        # except: 
-        #     print("Try didnt continue")
-        #     text = None
+        try:
+            text = tess.image_to_string(roi, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
+            # clean tesseract text by removing any unwanted blank spaces
+            clean_text = re.sub('[\W_]+', '', text)
+            plate_num += clean_text
+        except: 
+            print("Tried OCR , Failed ")
+            text = None
 
-        #DEBUG
-        print("Reading Plate Number...")
-        text = tess.image_to_string(roi, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
-        # clean tesseract text by removing any unwanted blank spaces
-        clean_text = re.sub('[\W_]+', '', text)
-        plate_num += clean_text
-        print("Read Complete")
+        # #DEBUG:
+        # print("Reading Plate Number...")
+        # text = tess.image_to_string(roi, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
+        # # clean tesseract text by removing any unwanted blank spaces
+        # clean_text = re.sub('[\W_]+', '', text)
+        # plate_num += clean_text
+        # print("Read Complete")
         #========================
 
     if plate_num != None:
         print("License Plate #: ", plate_num)
+    #DEBUG:
+    path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
+    cv2.imwrite(os.path.join(path, 'ocr.jpg') , im2)
     # cv2.imshow("Character's Segmented", im2)
     # cv2.waitKey(0)
+    #=================================
     return plate_num
 class VideoStreaming(object):
     def __init__(self):
@@ -264,10 +275,12 @@ class VideoStreaming(object):
 
                 if self._preview:
                     if self.detect: # if self.detect is true
-                        snap = self.MODEL.detectObj(snap) # apply snap from video feed to model | snap = frame ? 
+                        snap = self.MODEL.detectObj(snap) # apply snap from video feed to model | snap = frame  
                         try:
                             VideoStreaming.lblret = self.MODEL.lbl
-                            print(self.MODEL.lbl)
+                            #DEBUG:
+                            # print(self.MODEL.lbl) # PRINT CLASS NAME
+                            #========
                         except:
                             pass
 
