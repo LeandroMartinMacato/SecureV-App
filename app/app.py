@@ -33,5 +33,25 @@ def request_model_switch():
         pass
     return "nothing"
 
+@application.route("/database")
+def data_mode():
+    return render_template("data_mode.html") 
+
+@application.route("/register", methods=["POST","GET"])
+def register_mode():
+    # if request.method =="POST":
+    #     session.permanent = True
+    #     plate_input = request.form["plate_input"]
+    #     owner_input = request.form["owner_input"]
+    #     current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
+    #     db.session.add(current_registering)
+    #     db.session.commit()
+
+    return render_template("register_mode.html") 
+
+@application.route("/logs")
+def log_mode():
+    return render_template("log_mode.html") 
+
 if __name__ == '__main__':
     application.run(debug = True)

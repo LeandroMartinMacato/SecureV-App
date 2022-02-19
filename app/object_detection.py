@@ -9,7 +9,7 @@ import re
 from plate_verification import Car , Verificator
 
 # Initialize
-vehicle = Car("ABY8512")
+vehicle = Car("NXX887")
 verificator = Verificator()
 # pytesseract location
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
@@ -90,7 +90,7 @@ class ObjectDetection:
                         # recognize_plate(snap, ocr_boxes) # apply ocr and print text
                         verificator.verify_car(recognize_plate(snap, ocr_boxes)) # apply ocr and verify
                     except:
-                        print("No Plate Detected...")
+                        # print("No Plate Detected...")
                         ''' Except when no plate is available '''
                         continue
 
@@ -117,14 +117,12 @@ class ObjectDetection:
 
         return snap # Return snap object
 
-
 def recognize_plate(img, coords):
     ''' img should be  numpy.ndarray
         [438.   0. 482.  58.]
         <class 'numpy.ndarray'>
     '''
 
-    #TODO: xmax and ymax are corrrect but xmin and ymin is far from the detection box
     # separate coordinates from box
     # xmin, ymin, xmax, ymax = coords
     

@@ -1,10 +1,17 @@
-{% extends "bootstrap/base.html" %} {% block title %} {{ TITLE }} {% endblock %}
-{% block styles %} {{ super() }}
+{% extends "base.html" %} 
+<!-- -------------------------------- title -------------------------------- -->
+{% block title %} {{ TITLE }} {% endblock %}
 
+<!-- -------------------------------- style -------------------------------- -->
+{% block styles %} 
+{{ super() }}
 <!-- Custom styles -->
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-{% endblock %} {% block content %}
-<h1>{{ TITLE }}</h1>
+{% endblock %} 
+
+<!-- ------------------------------ contents ------------------------------- -->
+{% block content %}
+<!-- <h1>{{ TITLE }}</h1> -->
 
 <div id="container">
   <img id="videoElement" src="{{ url_for('video_feed') }}" />
@@ -13,7 +20,11 @@
     <a id="use-model"><button class="btn btn-default">On/Off</button></a>
   </form>
 </div>
-{% endblock %} {% block scripts %}
+{% endblock %} 
+
+<!-- ------------------------------- scripts ------------------------------- -->
+{% block scripts %}
+{{ super() }} 
 <!-- Imports -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -23,4 +34,4 @@
   src="{{ url_for('static', filename='script.js') }}"
 ></script>
 
-{{ super() }} {% endblock %}
+{% endblock %}
