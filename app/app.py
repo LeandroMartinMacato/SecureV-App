@@ -1,7 +1,10 @@
+import webbrowser
 from flask import Flask, render_template, request, Response, redirect, url_for
 from flask_bootstrap import Bootstrap
 
 from object_detection import *
+
+from threading import Timer #Debug Autostart
 
 application = Flask(__name__)
 Bootstrap(application)
@@ -53,5 +56,11 @@ def register_mode():
 def log_mode():
     return render_template("log_mode.html") 
 
+def open_browser():
+    ''' Debug autostartt'''
+    webbrowser.open_new('http://127.0.0.1:2000/')
+
 if __name__ == '__main__':
-    application.run(debug = True)
+    Timer(2, open_browser).start() # Auto open browser
+    application.run(port = 2000 , debug = True)
+    

@@ -7,26 +7,37 @@
 
 /* * HTML elements */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
+    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
     font-size: 18px;
     font-weight: normal;
     line-height: 1.5em;
-    width: 900px;
-    margin: auto;
+    /* width: 900px;
+    margin: auto; */
+}
+
+hr {
+    margin: 5px;
 }
 
 
 /* * Local selectors */
-#container {
+#contents{
+    margin: auto;
+    width: 1000px;
+    /* width: 80%; */
+}
+
+#detection-container {
     margin: 0px auto;
-    margin-top: 40px;
+    margin-top: 10px;
     width: 100%;
     height: 600px;
-    border: 10px #333 solid;
+    border: 5px #333 solid;
     background-color: black;
 }
 
-#container #videoElement {
+#detection-container #videoElement {
     width: auto;
     height: 100%;
     margin-left: auto;
@@ -37,4 +48,15 @@ body {
 
 #control {
     margin-top: 40px;
+}
+
+/* Class Selector */
+
+.page-header{
+    font-size: 32px;
+    margin-left: 20px;
+}
+
+.hidden {
+    display: none;
 }

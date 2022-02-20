@@ -9,17 +9,25 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 {% endblock %} 
 
+
+<!-- ------------------------------- header -------------------------------- -->
+{% block header %}
+<h2 class="page-header">| Live Preview |</h2>
+{% endblock %}
 <!-- ------------------------------ contents ------------------------------- -->
 {% block content %}
-<!-- <h1>{{ TITLE }}</h1> -->
 
-<div id="container">
-  <img id="videoElement" src="{{ url_for('video_feed') }}" />
-  <form id="control">
-    Toggle Detection:
-    <a id="use-model"><button class="btn btn-default">On/Off</button></a>
-  </form>
+
+<div id="contents">
+  <div id="detection-container">
+    <img id="videoElement" src="{{ url_for('video_feed') }}" />
+    <form id="control">
+      Toggle Detection:
+      <a id="use-model"><button class="btn btn-default">On/Off</button></a>
+    </form>
+  </div>
 </div>
+
 {% endblock %} 
 
 <!-- ------------------------------- scripts ------------------------------- -->
