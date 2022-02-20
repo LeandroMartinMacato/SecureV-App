@@ -2,21 +2,12 @@
 <!-- -------------------------------- title -------------------------------- -->
 {% block title %} {{ TITLE }} {% endblock %}
 
-<!-- -------------------------------- style -------------------------------- -->
-{% block styles %} 
-{{ super() }}
-<!-- Custom styles -->
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-{% endblock %} 
-
-
 <!-- ------------------------------- header -------------------------------- -->
 {% block header %}
 <h2 class="page-header">| Live Preview |</h2>
 {% endblock %}
 <!-- ------------------------------ contents ------------------------------- -->
 {% block content %}
-
 
 <div id="contents">
   <div id="detection-container">
@@ -30,16 +21,3 @@
 
 {% endblock %} 
 
-<!-- ------------------------------- scripts ------------------------------- -->
-{% block scripts %}
-{{ super() }} 
-<!-- Imports -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-<!-- Scripts -->
-<script
-  type="text/javascript"
-  src="{{ url_for('static', filename='script.js') }}"
-></script>
-
-{% endblock %}
