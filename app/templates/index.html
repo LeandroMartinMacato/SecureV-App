@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 <!-- -------------------------------- title -------------------------------- -->
 {% block title %} {{ TITLE }} {% endblock %}
 
@@ -10,14 +10,35 @@
 {% block content %}
 
 <div id="contents">
-  <div id="detection-container">
-    <img id="videoElement" src="{{ url_for('video_feed') }}" />
-    <form id="control">
-      Toggle Detection:
-      <a id="use-model"><button class="btn btn-default">On/Off</button></a>
-    </form>
-  </div>
+	<div id="detection-container">
+		<img id="videoElement" src="{{ url_for('video_feed') }}" />
+	</div>
+	<hr class="rounded" />
+
+	<div id="index-lower-container">
+		<form id="control">
+			Toggle Detection:
+			<a id="use-model"><button class="btn btn-default">On/Off</button></a>
+		</form>
+		<table class="tg" style="undefined;table-layout: fixed; width: 388px">
+			<colgroup>
+				<col style="width: 153px" />
+				<col style="width: 235px" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="tg-wp8o">| Plate Number |</th>
+					<th class="tg-wp8o">| Owner Info |</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="tg-wp8o">| TIK 142 |</td>
+					<td class="tg-wp8o">| Alejandro Martino |</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 
-{% endblock %} 
-
+{% endblock %}
