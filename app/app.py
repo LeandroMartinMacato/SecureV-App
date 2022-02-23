@@ -4,36 +4,23 @@ from flask_bootstrap import Bootstrap
 from object_detection import *
 
 from flask_sqlalchemy import SQLAlchemy # import sqlalchemy
+from database import db , Vehicle
 
 import webbrowser
 from threading import Timer #Debug Autostart
 
 application = Flask(__name__)
-# Bootstrap(application)
-
-# application.secret_key("password")
+application.config.update(
+    TESTING = True,
+    SECRET_KEY = "password"
+)
 application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/vehicle_db.sqlite3' # Config to use sqlalchemy
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(application)
 
-
 VIDEO = VideoStreaming()
 
-# --------------------------------- DATABASE --------------------------------- #
-class Vehicle(db.Model):
-    id = db.Column("id" , db.Integer , primary_key=True)
-    plate_num = db.Column("plate_num" , db.String(6) , nullable=False)
-    owner_name = db.Column("owner_name" , db.String(20) ,  nullable=False)
-
-    def __init__(self, plate_num , owner_name):
-        self.plate_num = plate_num
-        self.owner_name = owner_name
-        
-
-    def __repr__(self):
-        return f'Plate Num: {self.plate_num} | Owner Name: {self.owner_name}'
-# ------------------------------------- - ------------------------------------ #
 
 @application.route('/')
 def home():
@@ -66,13 +53,13 @@ def data_mode():
 
 @application.route("/register", methods=["POST","GET"])
 def register_mode():
-    # if request.method =="POST":
-    #     session.permanent = True
-    #     plate_input = request.form["plate_input"]
-    #     owner_input = request.form["owner_input"]
-    #     current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
-    #     db.session.add(current_registering)
-    #     db.session.commit()
+    if request.method =="POST":
+        session.permanent = True
+        plate_input = request.form["plate_input"]
+        owner_input = request.form["owner_input"]
+        current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
+        db.session.add(current_registering)
+        db.session.commit()
 
     return render_template("register_mode.html") 
 
@@ -84,22 +71,22 @@ def open_browser():
     ''' Debug autostartt'''
     webbrowser.open_new('http://127.0.0.1:2000/')
 
+def create_sample_db():
+    # jazz = Vehicle(plate_num = "tik142" , owner_name = "Leandro")
+    # avanza = Vehicle(plate_num = "abc326" , owner_name = "Oreo")
+    # wildtrak = Vehicle(plate_num = "dam696" , owner_name = "Brando")
+
+    # db.session.add(jazz)
+    # db.session.add(avanza)
+    # db.session.add(wildtrak)
+
+    # db.session.commit()
+    # Vehicle.query.all()
+    pass
+
+
 if __name__ == '__main__':
-    Timer(3, open_browser).start() # Auto open browser
-    db.create_all()
-    
-    # ----------------------------------- test ----------------------------------- #
-    jazz = Vehicle(plate_num = "tik142" , owner_name = "Leandro")
-    avanza = Vehicle(plate_num = "abc326" , owner_name = "Oreo")
-    wildtrak = Vehicle(plate_num = "dam696" , owner_name = "Brando")
+    # Timer(3, open_browser).start() # Auto open browser
+    # db.create_all() # Create db when it doesnt exist
 
-    db.session.add(jazz)
-    db.session.add(avanza)
-    db.session.add(wildtrak)
-
-    Vehicle.query.all()
-
-    # .
-
-    db.session.commit()
     application.run(port = 2000 , debug = True)
