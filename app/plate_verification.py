@@ -61,6 +61,7 @@ class Verificator:
 
 # ----------------------------------- debug main ---------------------------------- #
 if __name__ == "__main__":
+    pass
     # test = Vehicle.query.all()
     # print(test)
     # print(type(test))
