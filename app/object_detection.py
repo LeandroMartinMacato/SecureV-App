@@ -9,7 +9,7 @@ import re
 from plate_verification import Car , Verificator
 
 # Initialize
-vehicle = Car("NXX887")
+# vehicle = Car("NXX887")
 verificator = Verificator()
 # pytesseract location
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"

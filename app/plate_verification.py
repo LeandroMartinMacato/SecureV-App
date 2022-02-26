@@ -1,4 +1,5 @@
 import os
+from database import  db  ,Vehicle 
 
 class Car:
     def __init__(self , pnum):
@@ -23,13 +24,12 @@ class Car:
         self.pnum = None
 
 
-
-
 class Verificator:
     '''Temporary store car list'''
     def __init__(self):
-        # self.car_list = ["ABY8512" , "ABY852" , "ABY751"]
-        self.car_list = ["NXX8870" , "NXX887" , "tik142"]
+        # self.car_list = ["NXX8870" , "NXX887" , "tik142"]
+        self.car_list = []
+        self.get_plates_db() 
 
     def verify_car(self, plate_num):
         if plate_num in self.car_list:
@@ -39,31 +39,42 @@ class Verificator:
 
     def add_car(self , plate_num):
         self.car_list.append(plate_num)
-        print("Car Added!")
+        print(f"Plate {plate_num} Added!")
 
     def delete_car(self , plate_num):
         self.car_list.remove(plate_num)
         print("Car Deleted!")
 
+    def in_car_list(self, plate_num):
+        if plate_num in self.car_list:
+            return True
+        else:
+            return False
+
+    def get_plates_db(self):
+        car_list = []
+        db.create_all()
+        all_car_db = Vehicle.query.all()
+        for car in all_car_db:
+            plate = str(car).split("|")
+            self.add_car(plate[0])
+
+# ----------------------------------- debug main ---------------------------------- #
+if __name__ == "__main__":
+    # test = Vehicle.query.all()
+    # print(test)
+    # print(type(test))
 
 
-# ----------------------------------- main ----------------------------------- #
-
-# jazz = Car("tik142")
-# innova = Car("abc123")
-
-# verif_obj = Verificator()
+    # db.create_all()
+    # verif = Verificator()
 
 
-# car_list = []
+    # print(verif.car_list)
 
-# car_list.append(jazz) # add car object to list
-# car_list.append(innova) # add car object to list
 
-# print(car_list)
-# # verif_obj.verify_car(jazz.pnum)
-# verif_obj.verify_car(car_list[0].pnum)
-# verif_obj.verify_car(car_list[1].pnum)
+
+    
 
 
 

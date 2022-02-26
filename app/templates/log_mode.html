@@ -7,5 +7,43 @@
 {% endblock %}
 
 {% block content %}
-<p>Content</p>
+<div id="contents">
+    <div id="lower_container"> 
+        <table class="content-table">
+        <thead>
+            <tr>
+            <th>Id</th>
+            <th>Plate Number</th>
+            <th>Owner</th>
+            <th>Date and Time of Entry</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> ### </td>
+                <td> ### </td>
+                <td> ### </td>
+                <td> ### </td>
+            </tr>
+
+            <!-- ------------------------ display all item loop ------------------------ -->
+            <!-- {% for item in db_data %}
+            <tr>
+                <td> {{item["id"]}} </td>
+                <td> {{item["plate_num"]}} </td>
+                <td> {{item["owner_name"]}} </td>
+                <td> {{item["date_registered"]}} </td>
+            </tr>
+            {% endfor %} -->
+
+            <tr>
+                <td> ### </td>
+                <td> ### </td>
+                <td> ### </td>
+                <td> ### </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

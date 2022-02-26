@@ -4,7 +4,7 @@ from flask_bootstrap import Bootstrap
 from object_detection import *
 
 from flask_sqlalchemy import SQLAlchemy # import sqlalchemy
-from database import db , Vehicle
+from database import db , Vehicle , DB_Manager
 
 import webbrowser
 from threading import Timer #Debug Autostart
@@ -49,7 +49,8 @@ def request_model_switch():
 
 @application.route("/database")
 def data_mode():
-    return render_template("data_mode.html") 
+    db_man = DB_Manager()
+    return render_template("data_mode.html" , db_data = db_man.db_data) 
 
 @application.route("/register", methods=["POST","GET"])
 def register_mode():
@@ -70,19 +71,6 @@ def log_mode():
 def open_browser():
     ''' Debug autostartt'''
     webbrowser.open_new('http://127.0.0.1:2000/')
-
-def create_sample_db():
-    # jazz = Vehicle(plate_num = "tik142" , owner_name = "Leandro")
-    # avanza = Vehicle(plate_num = "abc326" , owner_name = "Oreo")
-    # wildtrak = Vehicle(plate_num = "dam696" , owner_name = "Brando")
-
-    # db.session.add(jazz)
-    # db.session.add(avanza)
-    # db.session.add(wildtrak)
-
-    # db.session.commit()
-    # Vehicle.query.all()
-    pass
 
 
 if __name__ == '__main__':

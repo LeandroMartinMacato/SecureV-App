@@ -20,11 +20,11 @@ class Vehicle(db.Model):
         
 
     def __repr__(self):
-        return f'Plate Num: {self.plate_num} | Owner Name: {self.owner_name} | Date Registered: {self.date_registered} '
+        return f'{self.plate_num}|{self.owner_name}|{self.date_registered}'
 
 class Entries(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date_of_entry = db.Column("date_of_entry" , db.Date() , default=datetime.datetime.now)
+    date_of_entry = db.Column("date_of_entry" , db.Date() , default=datetime.utcnow)
     # vehicle relation here
 
     def __init__(self):
@@ -32,3 +32,40 @@ class Entries(db.Model):
 
     def __repr__(self):
         return f"Date of Entry: {self.date_of_entry}"
+
+class DB_Manager():
+    def __init__(self):
+        self.db_connected = False
+        self.db_data = []
+        self.get_db_data()
+        self.count = 0
+        count = 0
+
+    def get_db_data(self):
+        self.db_data = [] # Clear current db_data to get fresh fetch
+        all_db_data = Vehicle.query.all() 
+        self.count = 0
+        for data in all_db_data:
+            data = str(data).split("|")
+            self.count = self.count + 1 
+            data_breakdown = {
+                "id" : self.count,
+                "plate_num": data[0],
+                "owner_name": data[1],
+                "date_registered": data[2]
+            }
+            self.db_data.append(data_breakdown)
+
+
+
+
+
+
+if __name__ == '__main__':
+    pass
+    # db.create_all()
+    # db_man = DB_Manager()
+    # db_man.get_db_data()
+    # print(db_man.db_data)
+    # test = Vehicle.query.filter_by(plate_num = "plate_num").first()
+    # test = Vehicle.query.all()
