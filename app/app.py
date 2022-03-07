@@ -24,8 +24,10 @@ VIDEO = VideoStreaming()
 
 @application.route('/')
 def home():
-    TITLE = 'SecureV'
-    return render_template('index.html', TITLE=TITLE)
+    page_title = 'SecureV | Home'
+    dis_plate = ""
+    dis_owner = ""
+    return render_template('index.html', TITLE=page_title , PLATE = dis_plate, OWNER = dis_owner)
 
 @application.route('/video_feed')
 def video_feed():
@@ -49,11 +51,13 @@ def request_model_switch():
 
 @application.route("/database")
 def data_mode():
+    page_title = 'SecureV | Database Mode'
     db_man = DB_Manager()
-    return render_template("data_mode.html" , db_data = db_man.db_data) 
+    return render_template("data_mode.html" , db_data = db_man.db_data, TITLE=page_title) 
 
 @application.route("/register", methods=["POST","GET"])
 def register_mode():
+    page_title = 'SecureV | Register Mode'
     if request.method =="POST":
         session.permanent = True
         plate_input = request.form["plate_input"]
@@ -62,11 +66,12 @@ def register_mode():
         db.session.add(current_registering)
         db.session.commit()
 
-    return render_template("register_mode.html") 
+    return render_template("register_mode.html", TITLE=page_title) 
 
 @application.route("/logs")
 def log_mode():
-    return render_template("log_mode.html") 
+    page_title = 'SecureV | Log Mode'
+    return render_template("log_mode.html", TITLE=page_title) 
 
 def open_browser():
     ''' Debug autostartt'''

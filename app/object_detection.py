@@ -13,6 +13,10 @@ from plate_verification import Car , Verificator
 verificator = Verificator()
 # pytesseract location
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
+
+# ---------------------------------------------------------------------------- #
+#                            object detection class                            #
+# ---------------------------------------------------------------------------- #
 class ObjectDetection:
     def __init__(self):
         # load yolo weights and cfg
@@ -117,6 +121,9 @@ class ObjectDetection:
 
         return snap # Return snap object
 
+# ---------------------------------------------------------------------------- #
+#                           recognize plate function                           #
+# ---------------------------------------------------------------------------- #
 def recognize_plate(img, coords):
     ''' img should be  numpy.ndarray
         [438.   0. 482.  58.]
@@ -240,6 +247,10 @@ def recognize_plate(img, coords):
     # cv2.waitKey(0)
     #=================================
     return plate_num
+
+# ---------------------------------------------------------------------------- #
+#                             video streaming class                            #
+# ---------------------------------------------------------------------------- #
 class VideoStreaming(object):
     def __init__(self):
         super(VideoStreaming, self).__init__()
