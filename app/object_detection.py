@@ -36,6 +36,7 @@ class ObjectDetection:
         # Generate random color
         np.random.seed(42)
         self.COLORS = np.random.randint(0, 255, size=(len(self.CLASSES), 3), dtype="uint8")
+        self.counter = 0 # For printing once in a while counter
 
     def detectObj(self, snap):
         height, width, channels = snap.shape 
@@ -69,33 +70,24 @@ class ObjectDetection:
                     confidences.append(float(confidence))
                     class_ids.append(class_id)
 
-                    #Snap is still not cropped
-                    # cv2.imshow("snapshot", snap)
-                    # cv2.waitKey(2)
-
-                    #DEBUG
-                    # print("LIST:")
-                    # print(boxes)
-                    # print("=====")
-                    # test = np.array(boxes[0])
-                    # print(test)
-                    # print(type(test))
-                    #==================
-
-                    # #DEBUG:
+                    # --------------------- DEBUG: Test without try exception -------------------- #
                     # ocr_boxes = np.array(boxes[0])
                     # recognize_plate(snap, ocr_boxes) # apply ocr and print text
                     # #===========
 
 
+                    # MAIN: uncomment when ! debugging
+                    self.counter += 1
                     try:
                         ''' Try Recognize Plate'''
                         ocr_boxes = np.array(boxes[0])
                         # recognize_plate(snap, ocr_boxes) # apply ocr and print text
                         verificator.verify_car(recognize_plate(snap, ocr_boxes)) # apply ocr and verify
                     except:
-                        # print("No Plate Detected...")
                         ''' Except when no plate is available '''
+                        if self.counter >= 80:
+                            print("Plate Detected But not in coordinate...")
+                            self.counter = 0
                         continue
 
 
@@ -112,6 +104,10 @@ class ObjectDetection:
                 cv2.rectangle(snap, (x, y), (x + w, y + h), color, 2) # draw a rectangle
                 cv2.putText(snap, label, (x, y - 5), font, 2, color, 2) # draw label text
                 cv2.putText(snap, percentage, (x, y - 25), font, 2, color, 2) # draw percentage text
+                # ------------------------------ debug show coords ----------------------------- #
+                # print(f"Orig Coords {x} , {y} , {w} , {h}")
+                # print(x , y , w , h)
+                # print(".....")
 
         try: 
             # Return labels
@@ -131,28 +127,20 @@ def recognize_plate(img, coords):
     '''
 
     # separate coordinates from box
-    # xmin, ymin, xmax, ymax = coords
+    xmin, ymin, w , h = coords
+    xmax = xmin + w
+    ymax = ymin + h
     
-
-    #DEBUG:
-    xmin, ymin, xmax, ymax = coords
-
-    # xmin = xmin + 85
-    # ymin = ymin + 12
-    # xmax = xmax
-    # ymax = ymax + 100
-    # print (xmin , ymin , xmax , ymax)
-    #======================
 
     # get the subimage that makes up the bounded region and take an additional 5 pixels on each side
     box = img[int(ymin)-5:int(ymax)+5, int(xmin)-5:int(xmax)+5] # box will be the subimage that is already cropped to the detected object
 
+    # ------------------------ DEBUG: save cropped detected img ------------------------ #
+    path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
+    cv2.imwrite(os.path.join(path, 'raw.jpg') , img)
+    cv2.imwrite(os.path.join(path, 'ocr_box.jpg') , box)
+    # -----
     
-    #DEBUG:
-    # cv2.imshow("Crop Debug", box)
-    # cv2.waitKey(0)
-    # #============================================================================================================
-
     # grayscale region within bounding box
     gray = cv2.cvtColor(box, cv2.COLOR_RGB2GRAY) # originally box
     # resize image to three times as large as original for better readability
@@ -181,6 +169,7 @@ def recognize_plate(img, coords):
     # create copy of gray image
     im2 = gray.copy()
     # create blank string to hold license plate number
+
     plate_num = ""
     # loop through contours and find individual letters and numbers in license plate
     for cnt in sorted_contours:
@@ -191,24 +180,24 @@ def recognize_plate(img, coords):
 
         # if height of box is not tall enough relative to total height then skip
         if height / float(h) > 6: 
-            # print("Skip 1")
+            # print("Skip 1: Not tall enough")
             continue
 
         ratio = h / float(w)
         # if height to width ratio is less than 1.5 skip
         if ratio < 1.5: 
-            # print("Skip 2")
+            # print("Skip 2: width ratio is less than 1.5")
             continue
 
         # if width is not wide enough relative to total width then skip
         if width / float(w) > 15: 
-            # print("Skip 3")
+            # print("Skip 3: not wide enough")
             continue
 
         area = h * w
         # if area is less than 100 pixels skip
         if area < 100: 
-            # print("Skip 4")
+            # print("Skip 4: less than 100 pixel")
             continue
 
         # draw the rectangle
@@ -229,7 +218,7 @@ def recognize_plate(img, coords):
             print("Tried OCR , Failed ")
             text = None
 
-        # #DEBUG:
+        # ----------------------- DEBUG: without try exception ----------------------- #
         # print("Reading Plate Number...")
         # text = tess.image_to_string(roi, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
         # # clean tesseract text by removing any unwanted blank spaces
@@ -240,12 +229,12 @@ def recognize_plate(img, coords):
 
     if plate_num != None:
         print("License Plate #: ", plate_num)
-    #DEBUG:
+
+    # ---------------------- DEBUG: save segmented image for debugging --------------------- #
     path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
-    cv2.imwrite(os.path.join(path, 'ocr.jpg') , im2)
-    # cv2.imshow("Character's Segmented", im2)
-    # cv2.waitKey(0)
+    cv2.imwrite(os.path.join(path, 'ocr_w_bound.jpg') , im2)
     #=================================
+
     return plate_num
 
 # ---------------------------------------------------------------------------- #
@@ -287,7 +276,7 @@ class VideoStreaming(object):
                         snap = self.MODEL.detectObj(snap) # apply snap from video feed to model | snap = frame  
                         try:
                             VideoStreaming.lblret = self.MODEL.lbl
-                            #DEBUG:
+                            # ---------------------------------- DEBUG: ---------------------------------- #
                             # print(self.MODEL.lbl) # PRINT CLASS NAME
                             #========
                         except:
