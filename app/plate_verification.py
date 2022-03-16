@@ -1,5 +1,6 @@
 import os
 from database import  db  ,Vehicle 
+import emoji
 
 class Car:
     def __init__(self , pnum):
@@ -32,10 +33,17 @@ class Verificator:
         self.get_plates_db() 
 
     def verify_car(self, plate_num):
+        plate_num = plate_num.lower()
+        # --------------------- DEBUG: print car list and verify --------------------- #
+        # print(f"VERIFYING: [ {plate_num} ]")
+        # print(f"CAR LIST: {self.car_list}")
+
         if plate_num in self.car_list:
-            print("Vehicle Verified!")
+            # print("Vehicle Verified!")
+            print(emoji.emojize("Vehicle Verified! :balloon: "))
         else:
-            print("Vehicle Unverified!")
+            print(emoji.emojize("Vehicle Unverified! :warning:"))
+            # print("Vehicle Unverified!")
 
     def add_car(self , plate_num):
         self.car_list.append(plate_num)
