@@ -49,13 +49,15 @@ $(function(){
 
 function loadNewDecimal(){
 	$.ajax({
-		url:"/update_decimal",
+		url:"/update_plate",
 		type: "POST",
 		dataType: "json",
 		success: function(data){
 			// $(random_decimal).replaceWith(data.content)
 			console.log("ajax success")
-			document.getElementById("random_decimal").innerText = data
+			console.log("replaced with")
+			console.log(data)
+			document.getElementById("dynamic_plate").innerText = data
 		}
 
 	});
@@ -65,8 +67,8 @@ function loadNewDecimal(){
 </script>
 
 
-<div id="random_decimal">
-{{ x }}
+<div id="dynamic_plate">
 <h2> NOT REPLACED </h2>
+{{ PLATE }}
 </div>
 {% endblock %}

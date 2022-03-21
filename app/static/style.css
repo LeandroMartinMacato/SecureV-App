@@ -57,6 +57,9 @@ hr {
 	text-align: center ;
 }
 
+#dynamic_plate{
+	font-size: 20px
+}
 /* Class Selector */
 
 .page-header {

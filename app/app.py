@@ -28,25 +28,20 @@ VIDEO = VideoStreaming()
 
 random_decimal = np.random.rand()
 
-@application.route('/update_decimal' , methods=['POST'])
-def updatedecimal():
+@application.route('/update_plate' , methods=['POST'])
+def updateplate():
     # random_decimal = np.random.rand()
     current_plate = object_detection.current_plate 
     # print(f"TEST {current_plate}")
     # return jsonify('' , render_template('random_decimal_model.html', x = random_decimal))
-    return jsonify('' , render_template('random_decimal_model.html', x = current_plate))
+    return jsonify('' , render_template('dynamic_plate.html', PLATE = current_plate))
 
 @application.route('/')
 def home():
     page_title = 'SecureV | Home'
-    return render_template('index.html', x = random_decimal)
-
-# @application.route('/')
-# def home():
-#     page_title = 'SecureV | Home'
-#     dis_plate = ""
-#     dis_owner = ""
-#     return render_template('index.html', TITLE=page_title , PLATE = dis_plate, OWNER = dis_owner)
+    current_plate = "default"
+    current_owner = "default"
+    return render_template('index.html', TITLE=page_title , PLATE = current_plate, OWNER = current_owner)
 
 @application.route('/video_feed')
 def video_feed():
