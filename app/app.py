@@ -1,13 +1,18 @@
-from flask import Flask, render_template, request, Response, redirect, url_for , session
+from flask import Flask, render_template, request, Response, redirect, url_for , session , jsonify
 from flask_bootstrap import Bootstrap
 
 from object_detection import *
+import object_detection
 
 from flask_sqlalchemy import SQLAlchemy # import sqlalchemy
 from database import db , Vehicle , DB_Manager
 
 import webbrowser
+
 from threading import Timer #Debug Autostart
+import numpy as np
+
+from plate_verification import Verificator
 
 application = Flask(__name__)
 application.config.update(
@@ -21,13 +26,27 @@ db = SQLAlchemy(application)
 
 VIDEO = VideoStreaming()
 
+random_decimal = np.random.rand()
+
+@application.route('/update_decimal' , methods=['POST'])
+def updatedecimal():
+    # random_decimal = np.random.rand()
+    current_plate = object_detection.current_plate 
+    # print(f"TEST {current_plate}")
+    # return jsonify('' , render_template('random_decimal_model.html', x = random_decimal))
+    return jsonify('' , render_template('random_decimal_model.html', x = current_plate))
 
 @application.route('/')
 def home():
     page_title = 'SecureV | Home'
-    dis_plate = ""
-    dis_owner = ""
-    return render_template('index.html', TITLE=page_title , PLATE = dis_plate, OWNER = dis_owner)
+    return render_template('index.html', x = random_decimal)
+
+# @application.route('/')
+# def home():
+#     page_title = 'SecureV | Home'
+#     dis_plate = ""
+#     dis_owner = ""
+#     return render_template('index.html', TITLE=page_title , PLATE = dis_plate, OWNER = dis_owner)
 
 @application.route('/video_feed')
 def video_feed():

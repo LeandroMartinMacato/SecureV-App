@@ -39,4 +39,34 @@
 	</div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<script type="text/javascript"> 
+$(function(){
+	window.setInterval(function(){
+		loadNewDecimal()
+	}, 3000)
+
+function loadNewDecimal(){
+	$.ajax({
+		url:"/update_decimal",
+		type: "POST",
+		dataType: "json",
+		success: function(data){
+			// $(random_decimal).replaceWith(data.content)
+			console.log("ajax success")
+			document.getElementById("random_decimal").innerText = data
+		}
+
+	});
+}
+});
+
+</script>
+
+
+<div id="random_decimal">
+{{ x }}
+<h2> NOT REPLACED </h2>
+</div>
 {% endblock %}

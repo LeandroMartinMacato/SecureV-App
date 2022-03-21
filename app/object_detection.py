@@ -17,6 +17,8 @@ tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.
 # ---------------------------------------------------------------------------- #
 #                            object detection class                            #
 # ---------------------------------------------------------------------------- #
+
+current_plate = 'null'
 class ObjectDetection:
     def __init__(self):
         # load yolo weights and cfg
@@ -83,6 +85,10 @@ class ObjectDetection:
                         ocr_boxes = np.array(boxes[0])
                         # recognize_plate(snap, ocr_boxes) # apply ocr and print text
                         verificator.verify_car(recognize_plate(snap, ocr_boxes)) # apply ocr and verify
+
+                        global current_plate
+                        current_plate = verificator.get_current_plate()
+                        # print(current_plate) 
                     except:
                         ''' Except when no plate is available '''
                         if self.counter >= 80:
