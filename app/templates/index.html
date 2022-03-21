@@ -31,7 +31,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td class="tg-wp8o">| {{PLATE}} |</td>
+					<td class="tg-wp8o"> <div id="dynamic_plate"> {{PLATE}} </div></td>
 					<td class="tg-wp8o">| {{OWNER}} |</td>
 				</tr>
 			</tbody>
@@ -44,10 +44,10 @@
 <script type="text/javascript"> 
 $(function(){
 	window.setInterval(function(){
-		loadNewDecimal()
+		loadNewPlate()
 	}, 3000)
 
-function loadNewDecimal(){
+function loadNewPlate(){
 	$.ajax({
 		url:"/update_plate",
 		type: "POST",
@@ -67,8 +67,8 @@ function loadNewDecimal(){
 </script>
 
 
-<div id="dynamic_plate">
+<!-- <div id="dynamic_plate">
 <h2> NOT REPLACED </h2>
 {{ PLATE }}
-</div>
+</div> -->
 {% endblock %}
