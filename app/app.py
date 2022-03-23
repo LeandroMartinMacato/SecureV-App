@@ -10,7 +10,6 @@ from database import db , Vehicle , DB_Manager
 import webbrowser
 
 from threading import Timer #Debug Autostart
-import numpy as np
 
 from plate_verification import Verificator
 
@@ -23,6 +22,7 @@ application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/vehicle_db.sqlite3
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(application)
+db_manager = DB_Manager()
 
 VIDEO = VideoStreaming()
 
@@ -30,17 +30,19 @@ random_decimal = np.random.rand()
 
 @application.route('/update_plate' , methods=['POST'])
 def updateplate():
-    # random_decimal = np.random.rand()
     current_plate = object_detection.current_plate 
-    # print(f"TEST {current_plate}")
-    # return jsonify('' , render_template('random_decimal_model.html', x = random_decimal))
-    return jsonify('' , render_template('dynamic_plate.html', PLATE = current_plate))
+    try:
+        current_owner = db_manager.search_owner(current_plate)
+    except:
+        current_owner = "No owner found"
+
+    return jsonify('' , render_template('dynamic_plate.html', PLATE = current_plate , OWNER = current_owner))
 
 @application.route('/')
 def home():
     page_title = 'SecureV | Home'
-    current_plate = "default"
-    current_owner = "default"
+    current_plate = ""
+    current_owner = ""
     return render_template('index.html', TITLE=page_title , PLATE = current_plate, OWNER = current_owner)
 
 @application.route('/video_feed')

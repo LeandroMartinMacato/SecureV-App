@@ -52,14 +52,16 @@ hr {
 }
 
 #lower-container {
-    width: 100%;
-    margin: 0 auto 0 auto ;
-	text-align: center ;
+	width: 100%;
+	margin: 0 auto 0 auto;
+	text-align: center;
 }
 
-#dynamic_plate{
-	font-size: 20px
+#dynamic_plate {
+	font-size: 20px;
 }
+
+
 /* Class Selector */
 
 .page-header {
@@ -71,20 +73,31 @@ hr {
 	display: none;
 }
 
+.register_form{
+	text-align: center;
+	margin: 0 auto; 
+}
+
 /* ------------------------------- index table ------------------------------ */
 .tg {
 	border-collapse: collapse;
 	border-spacing: 0;
-    margin: 0 auto 0 auto;
-	border: none;
+	text-align: center;
+	margin: 0 auto;
 }
 .tg td {
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
 	font-size: 14px;
 	overflow: hidden;
 	padding: 10px 5px;
 	word-break: normal;
 }
 .tg th {
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
 	font-size: 14px;
 	font-weight: normal;
 	overflow: hidden;
@@ -92,50 +105,50 @@ hr {
 	word-break: normal;
 }
 .tg .tg-wp8o {
+	border-color: #000000;
 	text-align: center;
 	vertical-align: top;
 }
 
-
 /* ------------------------------- data table ------------------------------- */
 
 .content-table {
-  text-align: center;
-  border-collapse: collapse;
-  /* margin: 25px 0; */
-  margin: 25px auto;
-  font-size: 0.9em;
-  min-width: 400px;
-  border-radius: 5px 5px 0 0;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	text-align: center;
+	border-collapse: collapse;
+	/* margin: 25px 0; */
+	margin: 25px auto;
+	font-size: 0.9em;
+	min-width: 400px;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .content-table thead tr {
-  background-color: #009879;
-  color: #ffffff;
-  text-align: left;
-  font-weight: bold;
+	background-color: #009879;
+	color: #ffffff;
+	text-align: left;
+	font-weight: bold;
 }
 
 .content-table th,
 .content-table td {
-  padding: 12px 15px;
+	padding: 12px 15px;
 }
 
 .content-table tbody tr {
-  border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
 }
 
 .content-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+	background-color: #f3f3f3;
 }
 
 .content-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+	border-bottom: 2px solid #009879;
 }
 
 .content-table tbody tr.active-row {
-  font-weight: bold;
-  color: #009879;
+	font-weight: bold;
+	color: #009879;
 }

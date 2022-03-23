@@ -56,6 +56,13 @@ class DB_Manager():
             }
             self.db_data.append(data_breakdown)
 
+    def get_owner_data(self,plate):
+        return Vehicle.query.filter_by(plate_num = plate).first()
+
+    def search_owner(self,plate):
+        searched_owner = [element for element in self.db_data if element['plate_num'] == plate]
+        return searched_owner[0]["owner_name"] 
+
 
 
 
@@ -63,9 +70,18 @@ class DB_Manager():
 
 if __name__ == '__main__':
     pass
+    # create db debug
     # db.create_all()
     # db_man = DB_Manager()
     # db_man.get_db_data()
     # print(db_man.db_data)
+    
+    # print data debug
+    # print(db_man.get_owner_data("tk142"))
+    # print(type(db_man.get_owner_data("tk142")))
+    # print(type(db_man.db_data))
+
+    # search debug
+    # print(db_man.search_owner("tk142"))
     # test = Vehicle.query.filter_by(plate_num = "plate_num").first()
     # test = Vehicle.query.all()

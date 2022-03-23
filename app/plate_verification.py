@@ -32,11 +32,12 @@ class Verificator:
         self.car_list = []
         self.get_plates_db() 
         self.current_plate = ''
+        self.current_owner = ''
 
     def verify_car(self, plate_num):
         plate_num = plate_num.lower()
         self.current_plate = plate_num
-        currenty_plate = plate_num
+        # self.current_owner = db
         # --------------------- DEBUG: print car list and verify --------------------- #
         # print(f"VERIFYING: [ {plate_num} ]")
         # print(f"CAR LIST: {self.car_list}")

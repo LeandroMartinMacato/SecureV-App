@@ -18,10 +18,10 @@
 			Toggle Detection:
 			<a id="use-model"><button class="btn btn-default">On/Off</button></a>
 		</form>
-		<table class="tg" style="undefined;table-layout: fixed; width: 388px">
+		<table class="tg" style="undefined;table-layout: fixed; width: 402px">
 			<colgroup>
-				<col style="width: 153px" />
-				<col style="width: 235px" />
+				<col style="width: 201px" />
+				<col style="width: 201px" />
 			</colgroup>
 			<thead>
 				<tr>
@@ -31,8 +31,8 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td class="tg-wp8o"> <div id="dynamic_plate"> {{PLATE}} </div></td>
-					<td class="tg-wp8o">| {{OWNER}} |</td>
+					<!-- <td class="tg-wp8o"> <div id="dynamic_plate"> {{PLATE}} </div></td> -->
+					<td class="tg-wp8o" colspan="2"><div id="dynamic_plate"> {{PLATE}} </div></td>
 				</tr>
 			</tbody>
 		</table>
@@ -41,31 +41,28 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
-<script type="text/javascript"> 
-$(function(){
-	window.setInterval(function(){
-		loadNewPlate()
-	}, 3000)
+<script type="text/javascript">
+	$(function () {
+		window.setInterval(function () {
+			loadNewPlate();
+		}, 3000);
 
-function loadNewPlate(){
-	$.ajax({
-		url:"/update_plate",
-		type: "POST",
-		dataType: "json",
-		success: function(data){
-			// $(random_decimal).replaceWith(data.content)
-			console.log("ajax success")
-			console.log("replaced with")
-			console.log(data)
-			document.getElementById("dynamic_plate").innerText = data
+		function loadNewPlate() {
+			$.ajax({
+				url: "/update_plate",
+				type: "POST",
+				dataType: "json",
+				success: function (data) {
+					// $(random_decimal).replaceWith(data.content)
+					console.log("ajax success");
+					console.log("replaced with");
+					console.log(data);
+					document.getElementById("dynamic_plate").innerText = data;
+				},
+			});
 		}
-
 	});
-}
-});
-
 </script>
-
 
 <!-- <div id="dynamic_plate">
 <h2> NOT REPLACED </h2>
