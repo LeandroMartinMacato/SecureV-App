@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import datetime as dt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/vehicle_db.sqlite3' # Config to use sqlalchemy
@@ -25,11 +24,11 @@ class Vehicle(db.Model):
         return f'{self.plate_num}|{self.owner_name}|{self.date_registered}'
 
 class Entry(db.Model):
+    curr_entry_time = datetime.now().isoformat(' ', 'seconds') 
+
     id = db.Column(db.Integer, primary_key=True)
-    date_of_entry = db.Column("date_of_entry" , db.String(30) ,nullable = False , default=dt.datetime.now)
-    # entry_vehicle_id = db.Column(db.Integer, db.ForeignKey("vehicle.id") , nullable = False)
+    date_of_entry = db.Column("date_of_entry" , db.String(30) ,nullable = False , default= curr_entry_time)
     entry_vehicle_plate = db.Column(db.String(6), db.ForeignKey("vehicle.plate_num") , nullable = False) # Test
-    # vehicle relation here
 
     # def __init__(self , ):
     #     self.date_of_entry = self.date_of_entry

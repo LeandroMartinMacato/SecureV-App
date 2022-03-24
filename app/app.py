@@ -86,8 +86,9 @@ def register_mode():
 
 @application.route("/logs")
 def log_mode():
+    db_man = DB_Manager()
     page_title = 'SecureV | Log Mode'
-    return render_template("log_mode.html", TITLE=page_title) 
+    return render_template("log_mode.html", db_data = db_man.db_data_entries, TITLE=page_title) 
 
 def open_browser():
     ''' Debug autostartt'''

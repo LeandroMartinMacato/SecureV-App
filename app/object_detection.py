@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt #debug
 import os
 import re
 # Building:
-from plate_verification import Car , Verificator
+from plate_verification import Car , Verificator # Remove Car Class
+from database import db , Vehicle , DB_Manager
 
 # Initialize
 # vehicle = Car("NXX887")

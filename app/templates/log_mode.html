@@ -12,9 +12,8 @@
         <table class="content-table">
         <thead>
             <tr>
-            <th>Id</th>
+            <th>Entry Id</th>
             <th>Plate Number</th>
-            <th>Owner</th>
             <th>Date and Time of Entry</th>
             </tr>
         </thead>
@@ -23,21 +22,18 @@
                 <td> ### </td>
                 <td> ### </td>
                 <td> ### </td>
-                <td> ### </td>
             </tr>
 
             <!-- ------------------------ display all item loop ------------------------ -->
-            <!-- {% for item in db_data %}
+            {% for item in db_data %}
             <tr>
                 <td> {{item["id"]}} </td>
-                <td> {{item["plate_num"]}} </td>
-                <td> {{item["owner_name"]}} </td>
-                <td> {{item["date_registered"]}} </td>
+                <td> {{item["plate"]}} </td>
+                <td> {{item["date"]}} </td>
             </tr>
-            {% endfor %} -->
+            {% endfor %}
 
             <tr>
-                <td> ### </td>
                 <td> ### </td>
                 <td> ### </td>
                 <td> ### </td>
