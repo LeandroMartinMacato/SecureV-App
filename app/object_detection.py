@@ -5,9 +5,8 @@ import pytesseract as tess
 import matplotlib.pyplot as plt #debug
 import os
 import re
-# Building:
-from plate_verification import Car , Verificator # Remove Car Class
-from database import db , Vehicle , DB_Manager
+
+from plate_verification import Verificator
 
 # Initialize
 # vehicle = Car("NXX887")
@@ -90,11 +89,12 @@ class ObjectDetection:
                         global current_plate
                         current_plate = verificator.get_current_plate()
                         # print(current_plate) 
-                    except:
+                    except Exception as e:
                         ''' Except when no plate is available '''
                         if self.counter >= 80:
                             print("Plate Detected But not in coordinate...")
                             self.counter = 0
+                        print(f"Error Exception: {e}")
                         continue
 
 

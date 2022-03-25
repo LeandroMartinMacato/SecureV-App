@@ -30,9 +30,9 @@ class Entry(db.Model):
     date_of_entry = db.Column("date_of_entry" , db.String(30) ,nullable = False , default= curr_entry_time)
     entry_vehicle_plate = db.Column(db.String(6), db.ForeignKey("vehicle.plate_num") , nullable = False) # Test
 
-    # def __init__(self , ):
-    #     self.date_of_entry = self.date_of_entry
-    #     self.vehicle_id = ""
+    def __init__(self , plate):
+        # self.date_of_entry = self.date_of_entry
+        self.entry_vehicle_plate = plate 
 
     def __repr__(self):
         return f"{self.date_of_entry}|{self.entry_vehicle_plate}"

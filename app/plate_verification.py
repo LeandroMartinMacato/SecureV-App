@@ -1,29 +1,6 @@
 import os
-from database import  db  ,Vehicle 
+from database import  db  ,Vehicle , Entry , DB_Manager
 import emoji
-
-class Car:
-    def __init__(self , pnum):
-        self.pnum = pnum
-        self.owner = None
-
-    @property
-    def pnum(self):
-        return self._pnum
-
-    @pnum.setter
-    def pnum(self , new_pnum):
-        self._pnum = new_pnum
-
-    @pnum.getter
-    def pnum(self):
-        return self._pnum
-
-    @pnum.deleter
-    def pnum(self):
-        print("Delete pnum!")
-        self.pnum = None
-
 
 class Verificator:
     '''Temporary store car list'''
@@ -45,6 +22,14 @@ class Verificator:
         if plate_num in self.car_list:
             # print("Vehicle Verified!")
             print(emoji.emojize("Vehicle Verified! :balloon: "))
+
+            #TODO Create condition to not create entry after a entry is created
+            car_obj_verified = Vehicle.query.filter_by(plate_num = plate_num).first() 
+            new_entry = Entry(plate = car_obj_verified.plate_num) 
+            db.session.add(new_entry) 
+            db.session.commit() 
+            print(f"New Entry From: {car_obj_verified.plate_num}")
+
         else:
             print(emoji.emojize("Vehicle Unverified! :warning:"))
             # print("Vehicle Unverified!")
