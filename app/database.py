@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime , timedelta
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/vehicle_db.sqlite3' # Config to use sqlalchemy
@@ -77,12 +77,35 @@ class DB_Manager():
             }
             self.db_data_entries.append(data_breakdown)
 
-    def get_owner_data(self,plate):
-        return Vehicle.query.filter_by(plate_num = plate).first()
-
     def search_owner(self,plate):
         searched_owner = [element for element in self.db_data if element['plate_num'] == plate]
         return searched_owner[0]["owner_name"] 
+
+    def get_car_entries(self , plate):
+        ''' return all car entries from the db '''
+        car_entry_list = []
+        car_to_get_entries = Vehicle.query.filter_by(plate_num = plate).first()
+        for entry in car_to_get_entries.entries:
+            data_list = str(entry).split("|")
+            car_entry_dt = data_list[0]
+            car_entry_list.append(car_entry_dt)
+        return car_entry_list
+
+    def get_latest_entry(self , plate):
+        ''' returns latest entry in datetime format'''
+        car_entry_list = []
+        car_to_get_entries = Vehicle.query.filter_by(plate_num = plate).first()
+        for entry in car_to_get_entries.entries:
+            data_list = str(entry).split("|")
+            car_entry_dt = data_list[0]
+            car_entry_list.append(car_entry_dt)
+
+        if car_entry_list:
+            latest_entry = car_entry_list[-1] # STRING
+            latest_entry = datetime.strptime(latest_entry, "%Y-%m-%d %H:%M:%S")
+            return latest_entry
+        else:
+            return "No atleast one entry found..."
 
 
 if __name__ == '__main__':
@@ -99,15 +122,14 @@ if __name__ == '__main__':
     # print(type(db_man.get_owner_data("tk142")))
     # print(type(db_man.db_data))
 
-    # ------------------------------- search debug ------------------------------- #
-    # print(db_man.search_owner("tk142"))
-    # test = Vehicle.query.filter_by(plate_num = "plate_num").first()
-    # test = Vehicle.query.all()
+    # ------------------------------- search vehicle in db ------------------------------- #
+    # test = Vehicle.query.filter_by(plate_num = "dab398").first()
+    # print(test.plate_num)
 
     # -------------------------------- LOGS DEBUG -------------------------------- #
 
     # Create Vehicle
-    # car_1 = Vehicle("luh143" , "pinut")
+    # car_1 = Vehicle("dab398" , "billy")
     # db.session.add(car_1)
     # db.session.commit()
 
@@ -118,8 +140,49 @@ if __name__ == '__main__':
     # db.session.commit()
 
     # show car entries
-    # car_1 = Vehicle.query.filter_by(plate_num = "luh143").first()
+    # car_1 = Vehicle.query.filter_by(plate_num = "dab398").first()
     # print(f"Car_1 Entries : {car_1.entries}")
+    # print(type(car_1.entries))
+
+    # get car entries
+    # car_entries = db_man.get_car_entries("dab398")
+    # print(type(car_entries))
+    # print(car_entries)
+
+    # get car latest entry
+    # latest_entry = db_man.get_latest_entry("tk142")
+    # print(latest_entry)
+
+    # TEST
+    # cooldown = latest_entry + timedelta(minutes=1)
+    # curr_time = datetime.now().isoformat(' ', 'seconds') 
+    # curr_time = datetime.strptime(curr_time, "%Y-%m-%d %H:%M:%S")
+    # print(latest_entry)
+    # print(type(latest_entry))
+
+    # print(cooldown)
+    # print(type(cooldown))
+
+    # print(curr_time)
+    # print(type(curr_time))
+
+    # if curr_time >= cooldown:
+    #     print("TRUE CREATE LOG")
+    # else:
+    #     print("FALSE ON COOLDOWN")
+
+    # check if car has an entry
+    # car_1 = Vehicle.query.filter_by(plate_num = "tk142").first()
+    # try:
+    #     if db_man.get_car_entries("dab398"):
+    #         print("Car has atleast one entry")
+    #         print("True")
+    #     else:
+    #         print("EMPTY")
+    # except Exception as e:
+    #     print(e)
+    #     print("EXCEPTION: Car has no entry")
+
 
     # Show db_man data content
     # print(db_man.db_data)
