@@ -7,7 +7,14 @@
 {% endblock %}
 
 {% block content %}
+
 <div id="contents">
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
     <div id="lower_container"> 
         <form class = "register_form" action="#" method="post" >
             <p> Car Plate [ex. jes420] </p>

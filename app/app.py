@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response, redirect, url_for , session , jsonify
+from flask import Flask, render_template, request, Response, redirect, url_for , session , jsonify , flash
 from flask_bootstrap import Bootstrap
 
 from object_detection import *
@@ -81,7 +81,7 @@ def register_mode():
         current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
         db.session.add(current_registering)
         db.session.commit()
-
+        flash(f"Successfully Registered [{plate_input}]", "info")
     return render_template("register_mode.html", TITLE=page_title) 
 
 @application.route("/logs")
