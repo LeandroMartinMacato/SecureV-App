@@ -110,7 +110,7 @@ hr {
 	vertical-align: top;
 }
 
-/* ------------------------------- data table ------------------------------- */
+/* ------------------------------- database data table ------------------------------- */
 
 .content-table {
 	text-align: center;
@@ -151,4 +151,47 @@ hr {
 .content-table tbody tr.active-row {
 	font-weight: bold;
 	color: #009879;
+}
+
+
+/* ----------------------------- log data table ----------------------------- */
+.content-table-log {
+	text-align: center;
+	border-collapse: collapse;
+	/* margin: 25px 0; */
+	margin: 25px auto;
+	font-size: 0.9em;
+	min-width: 400px;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table-log thead tr {
+	background-color: #0cb6c2;
+	color: #ffffff;
+	text-align: center;
+	font-weight: bold;
+}
+
+.content-table-log th,
+.content-table-log td {
+	padding: 12px 15px;
+}
+
+.content-table-log tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+.content-table-log tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.content-table-log tbody tr:last-of-type {
+	border-bottom: 2px solid #0cb6c2;
+}
+
+.content-table-log tbody tr.active-row {
+	font-weight: bold;
+	color: #0cb6c2;
 }

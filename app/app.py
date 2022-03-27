@@ -74,15 +74,25 @@ def data_mode():
 @application.route("/register", methods=["POST","GET"])
 def register_mode():
     page_title = 'SecureV | Register Mode'
-    if request.method =="POST":
-        session.permanent = True
-        plate_input = request.form["plate_input"]
-        owner_input = request.form["owner_input"]
-        current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
-        db.session.add(current_registering)
-        db.session.commit()
-        flash(f"Successfully Registered [{plate_input}]", "info")
-    return render_template("register_mode.html", TITLE=page_title) 
+    error = False
+    error_message = ""
+    try:
+        if request.method =="POST":
+            session.permanent = True
+            plate_input = request.form["plate_input"]
+            owner_input = request.form["owner_input"]
+            if plate_input:
+                current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
+                db.session.add(current_registering)
+                db.session.commit()
+                flash(f"Successfully Registered [{plate_input}]", "info")
+            else:
+                error = True
+                error_message = "Input Box Empty"
+    except Exception as e:
+        error = True
+        error_message = "Error Input Box Value"
+    return render_template("register_mode.html", TITLE=page_title , error = error , error_msg = error_message) 
 
 @application.route("/logs")
 def log_mode():
