@@ -8,7 +8,6 @@ db_man = DB_Manager()
 class Verificator:
     '''Temporary store car list'''
     def __init__(self):
-        # self.car_list = ["NXX8870" , "NXX887" , "tik142"]
         self.car_list = []
         self.get_plates_db() 
         self.current_plate = ''
@@ -28,16 +27,15 @@ class Verificator:
 
         if plate_num in self.car_list:
             print(emoji.emojize("Vehicle Verified! :balloon: "))
-            self.cooldown = datetime.now() + timedelta(minutes = 1) # if plate is detected cooldown for 1 min
             car_obj_verified = Vehicle.query.filter_by(plate_num = plate_num).first() 
 
             try:
                 if db_man.get_car_entries(car_obj_verified.plate_num):
                     print(emoji.emojize(":minibus: Car exist w/ atleast ONE entry :open_book:")) # DEBUG:
-                    latest_entry = db_man.get_latest_entry(car_obj_verified.plate_num)
-                    self.cooldown = latest_entry + timedelta(minutes  = 1)
-                    self.curr_time = datetime.now().isoformat(' ', 'seconds') 
-                    self.curr_time = datetime.strptime(self.curr_time, "%Y-%m-%d %H:%M:%S")
+                    latest_entry = db_man.get_latest_entry(car_obj_verified.plate_num) # get latest entry
+                    self.cooldown = latest_entry + timedelta(minutes  = 1) # get cooldown from latest entry
+                    self.curr_time = datetime.now().isoformat(' ', 'seconds')  # get current time
+                    self.curr_time = datetime.strptime(self.curr_time, "%Y-%m-%d %H:%M:%S") # format current time
                     
                     # ------------------------- DEBUG: Check time values ------------------------- #
                     # print("........................................")
@@ -49,27 +47,36 @@ class Verificator:
 
                     if self.curr_time >= self.cooldown:
                         print(emoji.emojize("✅⏰ Not at Cooldown "))
-                        new_entry = Entry(plate = car_obj_verified.plate_num) 
+
+                        # create new entry
+                        curr_time_new_entry = datetime.now().isoformat(' ', 'seconds')
+                        new_entry = Entry(plate = car_obj_verified.plate_num , entry_dtime = curr_time_new_entry) 
                         db.session.add(new_entry) 
                         db.session.commit() 
                         db_man.get_db_data()
+                        
+                        # for console log
+                        latest_entry = db_man.get_latest_entry(car_obj_verified.plate_num)
+                        self.cooldown = latest_entry + timedelta(minutes  = 1)
                         print(emoji.emojize(f"✍ CREATE NEW ENTRY: {car_obj_verified.plate_num} at {latest_entry}"))
                     else:
                         print(emoji.emojize(f":alarm_clock: at cooldown till {self.cooldown}"))
                 else:
-                    print("Car exist but NO entry | Create entry") # DEBUG:
                     print(emoji.emojize(":bus: :anger: Car exist but NO entry :warning: | Create entry"))
-                    new_entry = Entry(plate = car_obj_verified.plate_num) 
+
+                    # create new entry
+                    curr_time_new_entry = datetime.now().isoformat(' ', 'seconds')
+                    new_entry = Entry(plate = car_obj_verified.plate_num , entry_dtime = curr_time_new_entry) 
                     db.session.add(new_entry) 
                     db.session.commit() 
                     db_man.get_db_data()
                     print(f"New Entry From: {car_obj_verified.plate_num}")
             except Exception as e:
+                print("ERROR!!!")
                 print(f"EXCEPTION: {e}")
             print(".........................End Verify Instance........................")
         else:
             print(emoji.emojize("Vehicle Unverified! :warning:"))
-            # print("Vehicle Unverified!")
 
     def add_car(self , plate_num):
         self.car_list.append(plate_num)

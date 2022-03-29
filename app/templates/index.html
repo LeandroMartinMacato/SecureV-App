@@ -31,7 +31,6 @@
 			</thead>
 			<tbody>
 				<tr>
-					<!-- <td class="tg-wp8o"> <div id="dynamic_plate"> {{PLATE}} </div></td> -->
 					<td class="tg-wp8o" colspan="2"><div id="dynamic_plate"> {{PLATE}} </div></td>
 				</tr>
 			</tbody>
@@ -53,19 +52,13 @@
 				type: "POST",
 				dataType: "json",
 				success: function (data) {
-					// $(random_decimal).replaceWith(data.content)
 					console.log("ajax success");
-					console.log("replaced with");
 					console.log(data);
-					document.getElementById("dynamic_plate").innerText = data;
+					document.getElementById("dynamic_plate").innerText = data[1];
 				},
 			});
 		}
 	});
 </script>
 
-<!-- <div id="dynamic_plate">
-<h2> NOT REPLACED </h2>
-{{ PLATE }}
-</div> -->
 {% endblock %}
