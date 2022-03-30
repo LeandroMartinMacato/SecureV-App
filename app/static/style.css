@@ -57,6 +57,10 @@ hr {
 	text-align: center;
 }
 
+#gate-status {
+	color: #586363;
+}
+
 #dynamic_plate {
 	font-size: 20px;
 }

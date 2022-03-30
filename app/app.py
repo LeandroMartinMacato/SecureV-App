@@ -26,7 +26,13 @@ db_manager = DB_Manager()
 
 VIDEO = VideoStreaming()
 
-random_decimal = np.random.rand()
+
+@application.route('/')
+def home():
+    page_title = 'SecureV | Home'
+    current_plate = ""
+    current_owner = ""
+    return render_template('index.html', TITLE=page_title , PLATE = current_plate, OWNER = current_owner)
 
 @application.route('/update_plate' , methods=['POST'])
 def updateplate():
@@ -38,12 +44,13 @@ def updateplate():
 
     return jsonify('' , render_template('dynamic_plate.html', PLATE = current_plate , OWNER = current_owner))
 
-@application.route('/')
-def home():
-    page_title = 'SecureV | Home'
-    current_plate = ""
-    current_owner = ""
-    return render_template('index.html', TITLE=page_title , PLATE = current_plate, OWNER = current_owner)
+
+@application.route('/update_gate' , methods=['POST'])
+def updategate():
+    # current_plate = object_detection.current_plate 
+    # current_g_status = False
+    current_g_status = "Closed"
+    return jsonify('' , render_template('dynamic_gate.html', GATE = current_g_status ))
 
 @application.route('/video_feed')
 def video_feed():
@@ -85,6 +92,7 @@ def register_mode():
                 current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
                 db.session.add(current_registering)
                 db.session.commit()
+                db_manager.get_db_data()
                 flash(f"Successfully Registered [{plate_input}]", "info")
             else:
                 error = True
@@ -108,5 +116,4 @@ def open_browser():
 if __name__ == '__main__':
     # Timer(3, open_browser).start() # Auto open browser
     # db.create_all() # Create db when it doesnt exist
-
     application.run(port = 2000 , debug = True)

@@ -46,6 +46,9 @@ class DB_Manager():
         self.count = 0
         count = 0
 
+    def create_db():
+        db.create_all()
+
     def get_db_data(self):
         self.db_data = [] # Clear current db_data to get fresh fetch
         self.db_data_entries = [] # for LOGS
@@ -112,7 +115,7 @@ if __name__ == '__main__':
     pass
 
     # ------------------------------ create db debug ----------------------------- #
-    # db.create_all()
+    db.create_all() # Create DB when it doesnt exist
     # db_man = DB_Manager()
     # db_man.get_db_data()
     # print(db_man.db_data)
