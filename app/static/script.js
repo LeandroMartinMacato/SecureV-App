@@ -1,14 +1,13 @@
-/* ---------------------------- TOGGLE DETECTION ---------------------------- */
+/* ------------------------- SLIDER TOGGLE DETECTION ------------------------ */
 
-$(function () {
-  // Model switch
-  $("a#use-model").bind("click", function () {
-    $.getJSON("/request_model_switch", function (data) {
-      // do nothing
+$(document).ready(function () {
+      var toggler = $(".toggle-switch");
+      toggler.click(function () {
+        $(this).toggleClass("active");
+        $.getJSON("/request_model_switch", function (data) {
+      });
     });
-    return false;
   });
-});
 
 
 /* ------------------------------- DYNAMIC JS ------------------------------- */
@@ -20,7 +19,7 @@ $(function () {
     loadNewPlate();
     loadGateStatus();
   }, 3000);
-
+  
   function loadNewPlate() {
     $.ajax({
       url: "/update_plate",
@@ -33,7 +32,7 @@ $(function () {
       },
     });
   }
-
+  
   function loadGateStatus() {
     $.ajax({
       url: "/update_gate",
@@ -43,23 +42,36 @@ $(function () {
         // console.log("--gate ajax function--");
         // console.log(data);
         // document.getElementById("gate-status").innerText = data[1];
-
+        
         DynamicPlate = document.getElementById("dynamic_plate").innerText
         DynamicPlate = DynamicPlate.split("| ")[1]
         // console.log(DynamicPlate); //DEBUG: Check DynamicPlate element val
-
+        
         if (DynamicPlate === "No owner found"){
-          document.getElementById("gate-status").innerText = "Gate Status: Closed";
-          document.getElementById("gate-status").style.color = "red"
+          document.getElementById("gate-status-container").innerText = "Gate Status: Closed";
+          document.getElementById("gate-status-container").style.color = "red"
         }
         else{
-          document.getElementById("gate-status").innerText = "Gate Status: Open";
-          document.getElementById("gate-status").style.color = "green"
+          document.getElementById("gate-status-container").innerText = "Gate Status: Open";
+          document.getElementById("gate-status-container").style.color = "green"
         }
-
-
+        
+        
       },
     });
   }
-
+  
 });
+
+
+/* ---------------------------- BUTTON TOGGLE DETECTION ---------------------------- */
+
+// $(function () {
+//   // Model switch
+//   $("a#use-model").bind("click", function () {
+//     $.getJSON("/request_model_switch", function (data) {
+//       // do nothing
+//     });
+//     return false;
+//   });
+// });

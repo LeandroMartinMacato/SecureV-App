@@ -14,36 +14,50 @@
 		<img id="videoElement" src="{{ url_for('video_feed') }}" />
 	</div>
 	<div id="lower-container">
-		<form id="control">
-			Toggle Detection:
-			<a id="use-model"><button class="btn btn-default">On/Off</button></a>
-		</form>
+		<div id="controller-container">
+			<form id="control">
+				Toggle Detection:
+				<span class="toggle-switch">
+					<span class="toggle-knob"></span>
+				</span>
+			</form>
+		 </div>
 
-		<div id = "gate-status">
+		<div id = "gate-status-container">
 			<p> Gate Status: Loading... </p>
 		</div>
 
-	
-		<table class="tg" style="undefined;table-layout: fixed; width: 402px">
-			<colgroup>
-				<col style="width: 201px" />
-				<col style="width: 201px" />
-			</colgroup>
-			<thead>
-				<tr>
-					<th class="tg-wp8o">| Plate Number |</th>
-					<th class="tg-wp8o">| Owner Name |</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="tg-wp8o" colspan="2"><div id="dynamic_plate"> {{PLATE}} </div></td>
-				</tr>
-			</tbody>
-		</table>
+		<div id = "info-container">
+			<table class="tg" style="undefined;table-layout: fixed; width: 402px">
+				<colgroup>
+					<col style="width: 201px" />
+					<col style="width: 201px" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th class="tg-wp8o">| Plate Number |</th>
+						<th class="tg-wp8o">| Owner Name |</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="tg-wp8o" colspan="2"><div id="dynamic_plate"> {{PLATE}} </div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
 	</div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}
+
+<!-- <a id="use-model"> 
+	<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">On/Off</button>
+	<label class="switch">
+		<input type="checkbox">
+		<span class="slider round"></span>
+	</label>
+</a>
+<a id = "toggle-status"> Not Detecting </a> -->

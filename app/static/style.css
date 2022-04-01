@@ -65,6 +65,19 @@ hr {
 	font-size: 20px;
 }
 
+#controller-container{
+	margin: 15px 0;
+}
+
+#info-container{
+	margin: 15px 0;
+}
+
+#gate-status-container{
+	margin: 15px 0;
+}
+
+#gate
 
 /* Class Selector */
 
@@ -77,9 +90,9 @@ hr {
 	display: none;
 }
 
-.register_form{
+.register_form {
 	text-align: center;
-	margin: 0 auto; 
+	margin: 0 auto;
 }
 
 /* ------------------------------- index table ------------------------------ */
@@ -157,7 +170,6 @@ hr {
 	color: #009879;
 }
 
-
 /* ----------------------------- log data table ----------------------------- */
 .content-table-log {
 	text-align: center;
@@ -198,4 +210,65 @@ hr {
 .content-table-log tbody tr.active-row {
 	font-weight: bold;
 	color: #0cb6c2;
+}
+
+/* --------------------------- TOGGLE SLIDER STYLE -------------------------- */
+
+.toggle-switch {
+	/* margin: 40px; */
+	margin-top: 20px;
+	margin-left: 40px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+}
+
+.toggle-switch,
+.toggle-switch .toggle-knob {
+	transition: all 0.2s ease-in;
+}
+
+.toggle-switch {
+	display: inline-block;
+	width: 55px;
+	height: 30px;
+	background-color: #ffffff;
+	border: 1px solid #d2d6de;
+	border-radius: 30px;
+	transform: scale(1.3);
+	box-shadow: inset 1px 1px 9px -3px rgba(4, 4, 4, 0.08),
+		1px 2px 6px -2px rgba(0, 0, 0, 0.01);
+	cursor: pointer;
+}
+
+.toggle-switch .toggle-knob {
+	display: inline-block;
+	width: 28px;
+	height: 26px;
+	margin: 1px 1px;
+	background-color: #ffffff;
+	border: solid 1px rgba(126, 126, 126, 0.07);
+	border-radius: 50px;
+	box-shadow: 0 1px 3px rgba(107, 106, 106, 0.26),
+		0 5px 1px rgba(107, 106, 106, 0.13);
+}
+
+.toggle-switch.active {
+	background-color: #77e189;
+	border: solid 1px transparent;
+}
+
+/* .toggle-switch:nth-of-type(2).active {
+	background-color: #77b5e1;
+}
+
+.toggle-switch:nth-of-type(3).active {
+	background-color: #e1ca77;
+}
+
+.toggle-switch:nth-of-type(4).active {
+	background-color: #e1778b;
+} */
+
+.toggle-switch.active .toggle-knob {
+	margin-left: 24px;
 }
