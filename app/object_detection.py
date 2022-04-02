@@ -8,17 +8,15 @@ import re
 
 from plate_verification import Verificator
 
-# Initialize
-# vehicle = Car("NXX887")
 verificator = Verificator()
-# pytesseract location
+# pytesseract location | Put absolute path on tesseract.exe
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
 
 # ---------------------------------------------------------------------------- #
 #                            object detection class                            #
 # ---------------------------------------------------------------------------- #
 
-current_plate = 'null'
+current_plate = 'Detecting...'
 class ObjectDetection:
     def __init__(self):
         # load yolo weights and cfg
@@ -149,7 +147,7 @@ def recognize_plate(img, coords):
     
     # --------------------------- Apply filters for ocr -------------------------- #
     # grayscale region within bounding box [GRAYSCALE]
-    gray = cv2.cvtColor(box, cv2.COLOR_RGB2GRAY) # originally box
+    gray = cv2.cvtColor(box, cv2.COLOR_RGB2GRAY) 
     # resize image to three times as large as original for better readability [RESIZE]
     gray = cv2.resize(gray, None, fx = 3, fy = 3, interpolation = cv2.INTER_CUBIC)
     # perform gaussian blur to smoothen image [GAUSSIAN BLUR]
@@ -211,7 +209,7 @@ def recognize_plate(img, coords):
 
         # draw the rectangle
         rect = cv2.rectangle(im2, (x,y), (x+w, y+h), (0,255,0),2)
-        # grab character region of image
+        # grab every character region of image (every single cnt)
         roi = thresh[y-5:y+h+5, x-5:x+w+5]
         # perfrom bitwise not to flip image to black text on white background
         roi = cv2.bitwise_not(roi)
@@ -224,7 +222,7 @@ def recognize_plate(img, coords):
             clean_text = re.sub('[\W_]+', '', text)
             plate_num += clean_text
         except: 
-            print("Tried OCR , Failed ")
+            print("Failed on object_detection.py | Install tesseract on your machine and configure PATH")
             text = None
 
         # ----------------------- DEBUG: without try exception ----------------------- #
