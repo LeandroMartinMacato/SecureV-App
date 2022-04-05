@@ -179,33 +179,47 @@ def recognize_plate(img, coords):
 
     plate_num = ""
     # loop through contours and find individual letters and numbers in license plate
+
+    # ----------------------------- DEBUG cond count ----------------------------- #
+    con1 = 0
+    con2 = 0
+    con3 = 0
+    con4 = 0
+
     for cnt in sorted_contours:
         x,y,w,h = cv2.boundingRect(cnt)
         height, width = im2.shape
+        is_filtered = True # Toggle for filtering
 
         # Countour Condition if not met skip the countour box
 
         # if height of box is not tall enough relative to total height then skip
-        if height / float(h) > 6: 
-            # print("Skip 1: Not tall enough")
-            continue
+        if is_filtered:
+            if height / float(h) > 6:  # 6
+                # print("Skip 1: Not tall enough")
+                con1 += 1
+                continue
 
-        ratio = h / float(w)
-        # if height to width ratio is less than 1.5 skip
-        if ratio < 1.5: 
-            # print("Skip 2: width ratio is less than 1.5")
-            continue
+            ratio = h / float(w)
+            # if height to width ratio is less than 1.5 skip
+            if ratio < 0.5 :  # 1.5
+                # print("Skip 2: width ratio is less than 1.5")
+                con2 += 1
+                continue
 
-        # if width is not wide enough relative to total width then skip
-        if width / float(w) > 15: 
-            # print("Skip 3: not wide enough")
-            continue
+            # if width is not wide enough relative to total width then skip
+            if width / float(w) > 35:  # 15
+                # print("Skip 3: not wide enough")
+                con3 += 1
+                continue
 
-        area = h * w
-        # if area is less than 100 pixels skip
-        if area < 100: 
-            # print("Skip 4: less than 100 pixel")
-            continue
+            area = h * w
+            # if area is less than 100 pixels skip
+            if area < 100:  # 15
+                # print("Skip 4: less than 100 pixel")
+                con4 += 1
+                continue
+
 
         # draw the rectangle
         rect = cv2.rectangle(im2, (x,y), (x+w, y+h), (0,255,0),2)
@@ -217,12 +231,15 @@ def recognize_plate(img, coords):
         roi = cv2.medianBlur(roi, 5)
 
         try:
-            text = tess.image_to_string(roi, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
+            # text = tess.image_to_string(roi , config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3') # default tesseract
+            text = tess.image_to_string(roi, lang="bestphplate", config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3') # Trained Model
+
             # clean tesseract text by removing any unwanted blank spaces
             clean_text = re.sub('[\W_]+', '', text)
             plate_num += clean_text
-        except: 
+        except Exception as e: 
             print("Failed on object_detection.py | Install tesseract on your machine and configure PATH")
+            print(f"EXCEPTION: {e}")
             text = None
 
         # ----------------------- DEBUG: without try exception ----------------------- #
@@ -234,12 +251,19 @@ def recognize_plate(img, coords):
         # print("Read Complete")
         #========================
 
+    # ----------------------- DEBUG cond count CONTINUATION ---------------------- #
+    print(f"Condition 1: {con1}")
+    print(f"Condition 2: {con2}")
+    print(f"Condition 3: {con3}")
+    print(f"Condition 4: {con4}")
+
+
     if plate_num != None:
         print("License Plate #: ", plate_num)
 
     # ---------------------- DEBUG: save ocr_w_bound  --------------------- #
     path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
-    cv2.imwrite(os.path.join(path, 'ocr_w_bound.jpg') , im2)
+    cv2.imwrite(os.path.join(path, 'ocr_w_bound.jpg') , im2) 
 
     return plate_num
 
