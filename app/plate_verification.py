@@ -17,7 +17,7 @@ class Verificator:
         self.current_time = ''
 
     def verify_car(self, plate_num):
-        plate_num = plate_num.lower()
+        plate_num = plate_num.upper()
         self.current_plate = plate_num
 
         # --------------------- DEBUG: print car list and verify --------------------- #

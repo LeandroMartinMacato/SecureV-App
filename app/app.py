@@ -86,8 +86,8 @@ def register_mode():
     try:
         if request.method =="POST":
             session.permanent = True
-            plate_input = request.form["plate_input"]
-            owner_input = request.form["owner_input"]
+            plate_input = request.form["plate_input"].upper()
+            owner_input = request.form["owner_input"].title()
             if plate_input:
                 current_registering = Vehicle(plate_num = plate_input , owner_name = owner_input)
                 db.session.add(current_registering)
