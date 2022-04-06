@@ -2,7 +2,6 @@ import time
 import cv2
 import numpy as np
 import pytesseract as tess
-import matplotlib.pyplot as plt #debug
 import os
 import re
 
@@ -11,6 +10,10 @@ from plate_verification import Verificator
 verificator = Verificator()
 # pytesseract location | Put absolute path on tesseract.exe
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
+
+#DEBUG PATHS
+path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
+path_cnt = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug\cnt_debug'
 
 # ---------------------------------------------------------------------------- #
 #                            object detection class                            #
@@ -141,7 +144,6 @@ def recognize_plate(img, coords):
     box = img[int(ymin)-5:int(ymax)+5, int(xmin)-5:int(xmax)+5] # box will be the subimage that is already cropped to the detected object
 
     # ------------------------ DEBUG: save cropped detected img ------------------------ #
-    path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
     cv2.imwrite(os.path.join(path, 'raw.jpg') , img)
     cv2.imwrite(os.path.join(path, 'ocr_box.jpg') , box)
     
@@ -149,7 +151,7 @@ def recognize_plate(img, coords):
     # grayscale region within bounding box [GRAYSCALE]
     gray = cv2.cvtColor(box, cv2.COLOR_RGB2GRAY) 
     # resize image to three times as large as original for better readability [RESIZE]
-    gray = cv2.resize(gray, None, fx = 3, fy = 3, interpolation = cv2.INTER_CUBIC)
+    gray = cv2.resize(gray, None, fx = 5, fy = 5, interpolation = cv2.INTER_CUBIC)
     # perform gaussian blur to smoothen image [GAUSSIAN BLUR]
     blur = cv2.GaussianBlur(gray, (5,5), 0)
     # threshold the image using Otsus method to preprocess for tesseract [THRESHOLD]
@@ -160,7 +162,6 @@ def recognize_plate(img, coords):
     dilation = cv2.dilate(thresh, rect_kern, iterations = 1)
 
     # ----------------------- DEBUG: save filter detection ----------------------- #
-    path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
     cv2.imwrite(os.path.join(path, 'thresh.jpg') , thresh)
     cv2.imwrite(os.path.join(path, 'rect_kern.jpg') , rect_kern) # ?
     cv2.imwrite(os.path.join(path, 'dilation.jpg') , dilation)
@@ -180,13 +181,22 @@ def recognize_plate(img, coords):
     plate_num = ""
     # loop through contours and find individual letters and numbers in license plate
 
+    # ---------------------------- DEBUG: SAVE ALL CNT --------------------------- #
+    try:
+        all_cnt = cv2.drawContours(dilation , contours , -1 , (0,255,0) , 3)
+        cv2.imwrite(os.path.join(path, 'all_cnt.jpg') , all_cnt) 
+    except Exception as e:
+        print(f"ERRORRRR {e}")
+
     # ----------------------------- DEBUG cond count ----------------------------- #
     con1 = 0
     con2 = 0
     con3 = 0
     con4 = 0
+    cnt_counter = 0 # DEBUG
 
     for cnt in sorted_contours:
+        cnt_counter += 1
         x,y,w,h = cv2.boundingRect(cnt)
         height, width = im2.shape
         is_filtered = True # Toggle for filtering
@@ -202,7 +212,7 @@ def recognize_plate(img, coords):
 
             ratio = h / float(w)
             # if height to width ratio is less than 1.5 skip
-            if ratio < 0.5 :  # 1.5
+            if ratio < 1.5 :  # 1.5
                 # print("Skip 2: width ratio is less than 1.5")
                 con2 += 1
                 continue
@@ -220,15 +230,22 @@ def recognize_plate(img, coords):
                 con4 += 1
                 continue
 
+        # --------------------------- DEBUG: SAVE EVERY CNT -------------------------- #
+        cnt_1 = f"test1_cnt{cnt_counter}.jpg"
+        cnt_2 = f"test2_cnt{cnt_counter}.jpg"
+        cnt_3 = f"test3_cnt{cnt_counter}.jpg"
 
         # draw the rectangle
         rect = cv2.rectangle(im2, (x,y), (x+w, y+h), (0,255,0),2)
         # grab every character region of image (every single cnt)
         roi = thresh[y-5:y+h+5, x-5:x+w+5]
         # perfrom bitwise not to flip image to black text on white background
+        # cv2.imwrite(os.path.join(path_cnt, cnt_1) , roi)  #cnt_save1 # DEBUG
         roi = cv2.bitwise_not(roi)
         # perform another blur on character region
+        # cv2.imwrite(os.path.join(path_cnt, cnt_2) , roi) #cnt_save2 # DEBUG
         roi = cv2.medianBlur(roi, 5)
+        cv2.imwrite(os.path.join(path_cnt, cnt_3) , roi) #cnt_save3 # DEBUG
 
         try:
             # text = tess.image_to_string(roi , config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3') # default tesseract
@@ -262,7 +279,6 @@ def recognize_plate(img, coords):
         print("License Plate #: ", plate_num)
 
     # ---------------------- DEBUG: save ocr_w_bound  --------------------- #
-    path = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ignore\image_debug'
     cv2.imwrite(os.path.join(path, 'ocr_w_bound.jpg') , im2) 
 
     return plate_num
