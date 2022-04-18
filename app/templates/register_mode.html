@@ -22,13 +22,24 @@
             </div>
         {% endfor %}
     {% endif %}
+
+    <!-- INSTRUCTIONS  -->
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert"  style="margin-bottom: 0px;">
+        <strong>Register Mode </strong> is responsible for registering new vehicles  and all other information related to the database
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div id="lower_container"> 
-        <form class = "register_form" action="#" method="post" >
-            <p> Car Plate [ex. jes420] </p>
-            <p> <input type="text" name="plate_input"/></p>
-            <p> Owner: </p>
-            <p> <input type="text" name="owner_input"/></p>
-            <p> <input onclick="register_checker()" type="submit" value="submit"/></p>
+        <form class = "mb-3" action="#" method="post" style="margin-top:20px;">
+            <label for="exampleInputEmail1" class="form-label">Car Plate </label>
+            <p> <input type="text" name="plate_input" class="form-control"/></p>
+            <div id="emailHelp" class="form-text">Input Philippine Plate format issued in January 2013 LLL-DDDD (where L represents a letter and D represents a one-digit number) for four-wheel vehicles and DDD-LLL plates for motorcycles. [ex. JES420] </div>
+            <br>
+            <label for="exampleInputPassword1" class="form-label">Vehicle Owner</label>
+            <p> <input type="text" name="owner_input" class="form-control"/></p>
+            <div id="emailHelp" class="form-text">Vehicle Owner's Full Name [First Name Last Name] [ex. Juanito Fernando]</div> </div>
+            <p> <button onclick="register_checker()" type="submit" value="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
