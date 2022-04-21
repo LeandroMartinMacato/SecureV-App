@@ -10,45 +10,117 @@
 {% block content %}
 
 <div id="contents">
-	<div id="detection-container">
-		<img id="videoElement" src="{{ url_for('video_feed') }}" />
-	</div>
-	<div id="lower-container">
-		<div id="controller-container">
-			<form id="control">
-				Toggle Detection:
-				<span class="toggle-switch">
-					<span class="toggle-knob"></span>
-				</span>
-			</form>
-		 </div>
+    <!-- INSTRUCTIONS  -->
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert"  style="margin-bottom: 5px;">
+        <strong>Live Preview Mode </strong> is the main page of SecureV webapp the detection / verification occurs in and displayed in realtime, The detection can be toggled on or off for the protoype of the web application. 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
-		<div id = "gate-status-container">
-			<p> Gate Status: Loading... </p>
+	<!-- ------------------------------ MAIN FLEX ------------------------------ -->
+	<div id="flex-content">
+		<!-- --------------------------- left flex item ---------------------------- -->
+		<div id="detection-container" style="color: white;">
+			<img id="videoElement" src="{{ url_for('video_feed') }}" />
 		</div>
 
-		<div id = "info-container">
-			<table class="tg" style="undefined;table-layout: fixed; width: 402px">
-				<colgroup>
-					<col style="width: 201px" />
-					<col style="width: 201px" />
-				</colgroup>
-				<thead>
-					<tr>
-						<th class="tg-wp8o">| Plate Number |</th>
-						<th class="tg-wp8o">| Owner Name |</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="tg-wp8o" colspan="2"><div id="dynamic_plate"> {{PLATE}} </div></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<!-- --------------------------- right flex item --------------------------- -->
+		<div id="flex-inner-content">
+			<!-- ---------------------------- top flex item ---------------------------- -->
+			<div id="flex-item-1">
+				<!-- Control | Gate Status -->
+				<div class="card text-white bg-dark mb-3" style="width: 100%;height: 100%;">
+					<div class="card-header" style="text-align: center;">
+						Control | Gate Status
+					</div>
 
+					<div class="card-body">
+
+						<div id="flex-card"> 
+							<div id="flex-card-item">
+								<div id="flex-card-column">
+
+									<div id="flex-card-item-column-photo">
+										<img id="image-icon" src="static/img/gate.png" alt="gate">
+									</div>
+
+									<div id="flex-card-item-column-content">
+										<div id = "gate-status-container">
+											<p> Gate Status: Loading... </p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="flex-card-item">
+								<div id="flex-card-column">
+									<div id="flex-card-item-column-photo">
+										<img id="image-icon" src="static/img/com_vis.png" alt="gate">
+									</div>
+
+									<div id="flex-card-item-column-content">
+										<div id="controller-container">
+											<form id="control">
+												<!-- Toggle Detection: -->
+												<span class="toggle-switch">
+													<span class="toggle-knob"></span>
+												</span>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- -------------------------- bottom flex item --------------------------- -->
+			<div id="flex-item-2">
+				<div class="card text-white bg-dark mb-3" style="width: 100%;height: 100%;">
+					<div class="card-header" style="text-align: center;">
+						Detected Plate & Owner Information
+					</div>
+					<div class="card-body">
+
+						<div id="flex-card"> 
+							<div id="flex-card-item">
+								<div id="flex-card-column">
+
+									<div id="flex-card-item-column-photo">
+										<img id="image-icon" src="static/img/plate.png" alt="gate">
+									</div>
+
+									<div id="flex-card-item-column-content">
+										<!-- TEXT MUST BE CAPS BECAUSE OF FONT STYLE -->
+										<td class="tg-wp8o" colspan="2"><div id="dynamic_plate"> {{PLATE}} </div></td>
+									</div>
+								</div>
+							</div>
+
+							<div id="flex-card-item">
+								<div id="flex-card-column">
+
+									<div id="flex-card-item-column-photo">
+										<img id="image-icon" src="static/img/man.png" alt="gate">
+									</div>
+
+									<div id="flex-card-item-column-content">
+										<div id="dynamic_owner"> Leandro Martin Macato </div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}

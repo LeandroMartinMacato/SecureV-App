@@ -19,7 +19,7 @@ path_cnt = 'F:\Programming\Python\~PROJECTS\College~\secureV\SecureV-App\git_ign
 #                            object detection class                            #
 # ---------------------------------------------------------------------------- #
 
-current_plate = 'Detecting...'
+current_plate = 'XXX-XXXX'
 class ObjectDetection:
     def __init__(self):
         # load yolo weights and cfg
