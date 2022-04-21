@@ -16,7 +16,7 @@ tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.
 #                            object detection class                            #
 # ---------------------------------------------------------------------------- #
 
-current_plate = 'Detecting...'
+current_plate = 'XXX-XXXX'
 class ObjectDetection:
     def __init__(self):
         # load yolo weights and cfg
