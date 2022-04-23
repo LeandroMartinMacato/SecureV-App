@@ -4,14 +4,17 @@ $(document).ready(function () {
     var toggler = $(".toggle-switch");
 
     toggler.click(function () {
-        $(this).toggleClass("active");
-        // $("#videoElement").css("filter" , "blur(2px)"); //Apply blur
-        $.getJSON("/request_model_switch", function (data) {
+      $(this).toggleClass("active");
+
+      /* ------------------------------ Toggle effect ----------------------------- */
+      $("#videoElement").toggleClass("videoBlur");
+      $(".loadingio-spinner-double-ring-sfzcndobthj").toggleClass("show");
+
+      $.getJSON("/request_model_switch", function (data) {
       });
-      console.log("TEST ON PRESS TOGGLE")
-      // $("#test").hide();
   });
 });
+
 
 
 /* ------------------------------- DYNAMIC JS ------------------------------- */
@@ -22,7 +25,7 @@ $(function () {
   window.setInterval(function () {
     loadNewPlate();
     loadGateStatus();
-  }, 3000);
+  }, 1000);
   
   function loadNewPlate() {
     $.ajax({
@@ -35,7 +38,6 @@ $(function () {
         // console.log("plate ajax success");
 
         dynamic_data = dynamic_data.split(" | ");
-        console.log(dynamic_data);
 
         // Manipulate String
         dynamic_data[0] = dynamic_data[0].substring(5);
@@ -73,15 +75,3 @@ $(function () {
   
 });
 
-
-/* ---------------------------- BUTTON TOGGLE DETECTION ---------------------------- */
-
-// $(function () {
-//   // Model switch
-//   $("a#use-model").bind("click", function () {
-//     $.getJSON("/request_model_switch", function (data) {
-//       // do nothing
-//     });
-//     return false;
-//   });
-// });

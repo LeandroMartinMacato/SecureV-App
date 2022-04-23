@@ -61,14 +61,11 @@ hr {
 #detection-container {
 	flex: 2.5;
 	margin: 0px auto;
-	/* margin-top: 10px; */
 	max-width: 100%;
-	/* height: 600px; */
 	height: 40rem;
-	/* border: 5px rgb(33, 37, 41) solid;
-	background-color: black; */
 	border: 3px rgb(33, 37, 41) solid;
 	background-color: rgb(13, 13, 13);
+	position: relative;
 	text-align: center; }
 
 #detection-container #videoElement {
@@ -80,6 +77,10 @@ hr {
 	margin-right: auto;
 	/* display: inline; */
 	background-color: black;
+}
+
+.videoBlur {
+	filter: blur(3px) opacity(35%);
 }
 
 #flex-card {
@@ -157,13 +158,13 @@ hr {
 }
 
 #dynamic_plate {
-	font-family: 'FE-Font', sans-serif;
+	font-family: "FE-Font", sans-serif;
 	/* font-size: 20px; */
 	font-size: 1.75rem;
 	text-align: center;
 }
 
-#dynamic_owner{
+#dynamic_owner {
 	font-family: "Titillium Web", sans-serif;
 	font-size: 20px;
 	text-align: center;
@@ -200,37 +201,6 @@ hr {
 	margin: 0 auto;
 }
 
-/* ------------------------------- index table ------------------------------ */
-.tg {
-	border-collapse: collapse;
-	border-spacing: 0;
-	text-align: center;
-	margin: 0 auto;
-}
-.tg td {
-	border-style: solid;
-	border-width: 0px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	overflow: hidden;
-	padding: 10px 5px;
-	word-break: normal;
-}
-.tg th {
-	border-style: solid;
-	border-width: 0px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	overflow: hidden;
-	padding: 10px 5px;
-	word-break: normal;
-}
-.tg .tg-wp8o {
-	border-color: #000000;
-	text-align: center;
-	vertical-align: top;
-}
 
 /* ------------------------------- database data table ------------------------------- */
 
@@ -322,7 +292,7 @@ hr {
 .toggle-switch {
 	/* margin: 0; */
 	margin-top: 0px;
-	margin-left: 0px; 
+	margin-left: 0px;
 	margin-bottom: 0px;
 	margin-right: 0px;
 }
@@ -368,4 +338,113 @@ hr {
 
 .toggle-switch.active .toggle-knob {
 	margin-left: 24px;
+}
+
+/* ----------------------------- LOADING SPINNER ---------------------------- */
+
+@keyframes ldio-9310di41lm {
+  0% { transform: rotate(0) }
+  100% { transform: rotate(360deg) }
+}
+/* MAIN DIV */
+.loadingio-spinner-double-ring-sfzcndobthj {
+  width: 141px;
+  height: 141px;
+  display: block;
+  position: absolute;
+  visibility: visible;
+  opacity: 0;
+  overflow: hidden;
+  top: 40%;
+  left: 42%;
+  background: rgba(NaN, NaN, NaN, 0);
+}
+.ldio-9310di41lm div { box-sizing: border-box!important }
+.ldio-9310di41lm > div {
+  position: absolute;
+  width: 101.52px;
+  height: 101.52px;
+  top: 19.74px;
+  left: 19.74px;
+  border-radius: 50%;
+  border: 11.28px solid #000;
+  border-color: #182731 transparent #182731 transparent;
+  animation: ldio-9310di41lm 1s linear infinite;
+}
+
+.ldio-9310di41lm > div:nth-child(2), .ldio-9310di41lm > div:nth-child(4) {
+  width: 76.14px;
+  height: 76.14px;
+  top: 32.43px;
+  left: 32.43px;
+  animation: ldio-9310di41lm 1s linear infinite reverse;
+}
+.ldio-9310di41lm > div:nth-child(2) {
+  border-color: transparent #a7d4ec transparent #a7d4ec
+}
+.ldio-9310di41lm > div:nth-child(3) { border-color: transparent }
+.ldio-9310di41lm > div:nth-child(3) div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(45deg);
+}
+.ldio-9310di41lm > div:nth-child(3) div:before, .ldio-9310di41lm > div:nth-child(3) div:after { 
+  content: "";
+  display: block;
+  position: absolute;
+  width: 11.28px;
+  height: 11.28px;
+  top: -11.28px;
+  left: 33.839999999999996px;
+  background: #182731;
+  border-radius: 50%;
+  box-shadow: 0 90.24px 0 0 #182731;
+}
+.ldio-9310di41lm > div:nth-child(3) div:after {
+  left: -11.28px;
+  top: 33.839999999999996px;
+  box-shadow: 90.24px 0 0 0 #182731;
+}
+
+.ldio-9310di41lm > div:nth-child(4) { border-color: transparent; }
+.ldio-9310di41lm > div:nth-child(4) div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(45deg);
+}
+.ldio-9310di41lm > div:nth-child(4) div:before, .ldio-9310di41lm > div:nth-child(4) div:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 11.28px;
+  height: 11.28px;
+  top: -11.28px;
+  left: 21.15px;
+  background: #a7d4ec;
+  border-radius: 50%;
+  box-shadow: 0 64.86px 0 0 #a7d4ec;
+}
+.ldio-9310di41lm > div:nth-child(4) div:after {
+  left: -11.28px;
+  top: 21.15px;
+  box-shadow: 64.86px 0 0 0 #a7d4ec;
+}
+.ldio-9310di41lm {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-9310di41lm div { box-sizing: content-box; }
+
+.hide {
+	display: none;
+}
+
+.show{
+	opacity: 1 !important;
 }
