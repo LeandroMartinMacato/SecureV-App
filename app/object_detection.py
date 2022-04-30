@@ -95,7 +95,7 @@ class ObjectDetection:
                         if self.counter >= 80:
                             print("Plate Detected But not in coordinate...")
                             self.counter = 0
-                        print(f"Error Exception: {e}")
+                        print(f"Error Exception @ object_detection.py | Plate is not aligned in camera properly: {e}")
                         continue
 
 

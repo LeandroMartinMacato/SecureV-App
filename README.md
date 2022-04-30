@@ -17,6 +17,7 @@
       - [4.2 Download Tesseract Trained Model on FE-Schrift Font and place in tesseract installation folder](#42-download-tesseract-trained-model-on-fe-schrift-font-and-place-in-tesseract-installation-folder)
     - [5. Run Flask Server](#5-run-flask-server)
   - [Screenshots](#screenshots)
+  - [License & Copyright](#license--copyright)
 
 ---
 
@@ -107,3 +108,7 @@ tesseract_installation_folder/tessdata/
 |     ![live-preview](./docs/docs-live-page.png)     | ![database-preview](./docs/docs-database-page.png) |
 | :------------------------------------------------: | :------------------------------------------------: |
 | ![register-preview](./docs/docs-register-page.png) |      ![log-preview](./docs/docs-log-page.png)      |
+
+## License & Copyright
+
+Licensed under the [MIT License](LICENSE)
