@@ -40,7 +40,7 @@ def updateplate():
     try:
         current_owner = db_manager.search_owner(current_plate)
     except:
-        current_owner = "No owner found"
+        current_owner = "Not Verified"
 
     return jsonify('' , render_template('dynamic_plate.html', PLATE = current_plate , OWNER = current_owner))
 

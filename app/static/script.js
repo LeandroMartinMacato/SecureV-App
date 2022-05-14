@@ -60,7 +60,7 @@ $(function () {
         
         check_owner = document.getElementById("dynamic_owner").innerText
         
-        if (check_owner === "No owner found"){
+        if (check_owner === "Not Verified"){
           document.getElementById("gate-status-container").innerText = "Gate Status: Closed";
           document.getElementById("gate-status-container").style.color = "red"
         }

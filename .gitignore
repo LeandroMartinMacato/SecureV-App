@@ -1,4 +1,5 @@
 yolov4.weights
 *.pyc
+settings.json
 
 /git_ignore/
