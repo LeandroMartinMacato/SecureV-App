@@ -20,6 +20,9 @@ class Verificator:
         plate_num = plate_num.upper()
         self.current_plate = plate_num
 
+        self.clear_local_plates()
+        self.get_plates_db()
+
         # --------------------- DEBUG: print car list and verify --------------------- #
         # print(f"VERIFYING: [ {plate_num} ]")
         # print(f"CAR LIST: {self.car_list}")
@@ -80,7 +83,6 @@ class Verificator:
 
     def add_car(self , plate_num):
         self.car_list.append(plate_num)
-        print(f"Plate {plate_num} Added!")
 
     def in_car_list(self, plate_num):
         if plate_num in self.car_list:
@@ -95,6 +97,9 @@ class Verificator:
         for car in all_car_db:
             plate = str(car).split("|")
             self.add_car(plate[0])
+
+    def clear_local_plates(self):
+        self.car_list = []
 
     def get_current_plate(self):
         return self.current_plate

@@ -25,7 +25,7 @@ $(function () {
   window.setInterval(function () {
     loadNewPlate();
     loadGateStatus();
-  }, 1000);
+  }, 800);
   
   function loadNewPlate() {
     $.ajax({
@@ -60,13 +60,13 @@ $(function () {
         
         check_owner = document.getElementById("dynamic_owner").innerText
         
-        if (check_owner === "Not Verified"){
-          document.getElementById("gate-status-container").innerText = "Gate Status: Closed";
-          document.getElementById("gate-status-container").style.color = "red"
-        }
-        else{
+        if (check_owner !== "Not Verified" && check_owner !== ""){
           document.getElementById("gate-status-container").innerText = "Gate Status: Open";
           document.getElementById("gate-status-container").style.color = "green"
+        }
+        else{
+          document.getElementById("gate-status-container").innerText = "Gate Status: Closed";
+          document.getElementById("gate-status-container").style.color = "red"
         }
         
       },

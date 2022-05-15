@@ -11,7 +11,6 @@ import webbrowser
 
 from threading import Timer #Debug Autostart
 
-from plate_verification import Verificator
 
 application = Flask(__name__)
 application.config.update(
@@ -37,6 +36,7 @@ def home():
 @application.route('/update_plate' , methods=['POST'])
 def updateplate():
     current_plate = object_detection.current_plate 
+    db_manager.get_db_data() # Not sure
     try:
         current_owner = db_manager.search_owner(current_plate)
     except:
