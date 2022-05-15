@@ -94,6 +94,25 @@ class DB_Manager():
             car_entry_list.append(car_entry_dt)
         return car_entry_list
 
+    def delete_car_and_all_entries(self , plate):
+        self.delete_all_car_entries(plate)
+        self.delete_car(plate)
+
+    def delete_all_car_entries(self , plate):
+        car_to_get_entries = Vehicle.query.filter_by(plate_num = plate).first()
+        if car_to_get_entries.entries:
+            for entry in car_to_get_entries.entries:
+                db.session.delete(entry)
+                db.session.commit()
+        else:
+            print("Nothing to delete")
+
+    def delete_car(self , plate):
+        car_del_obj = Vehicle.query.filter_by(plate_num = plate).first()
+        db.session.delete(car_del_obj)
+        db.session.commit()
+        print("Vehicle Deleted")
+
     def get_latest_entry(self , plate):
         ''' returns latest entry in datetime format'''
         car_entry_list = []
@@ -132,13 +151,13 @@ if __name__ == '__main__':
     # -------------------------------- LOGS DEBUG -------------------------------- #
 
     # Create Vehicle
-    # car_1 = Vehicle("dab398" , "billy")
+    # car_1 = Vehicle("BBM123" , "bobo")
     # db.session.add(car_1)
     # db.session.commit()
 
     # Create Entry
-    # car_1 = Vehicle.query.filter_by(plate_num = "luh143").first()
-    # entry_1 = Entry(entry_vehicle_plate = car_1.plate_num)
+    # car_1 = Vehicle.query.filter_by(plate_num = "TIK142").first()
+    # entry_1 = Entry(plate = car_1.plate_num , entry_dtime = datetime.now().isoformat(' ', 'seconds'))
     # db.session.add(entry_1)
     # db.session.commit()
 
@@ -156,24 +175,6 @@ if __name__ == '__main__':
     # latest_entry = db_man.get_latest_entry("tk142")
     # print(latest_entry)
 
-    # TEST
-    # cooldown = latest_entry + timedelta(minutes=1)
-    # curr_time = datetime.now().isoformat(' ', 'seconds') 
-    # curr_time = datetime.strptime(curr_time, "%Y-%m-%d %H:%M:%S")
-    # print(latest_entry)
-    # print(type(latest_entry))
-
-    # print(cooldown)
-    # print(type(cooldown))
-
-    # print(curr_time)
-    # print(type(curr_time))
-
-    # if curr_time >= cooldown:
-    #     print("TRUE CREATE LOG")
-    # else:
-    #     print("FALSE ON COOLDOWN")
-
     # check if car has an entry
     # car_1 = Vehicle.query.filter_by(plate_num = "tk142").first()
     # try:
@@ -186,7 +187,36 @@ if __name__ == '__main__':
     #     print(e)
     #     print("EXCEPTION: Car has no entry")
 
+    # -------------------------------- TEST DELETE ------------------------------- #
+    # car_del = "BBM123"
+    # car_del_obj = Vehicle.query.filter_by(plate_num = car_del).first()
+
+    # db.session.delete(car_del_obj)
+    # db.session.commit()
+
+
+    # Create car
+    # car_1 = Vehicle("BBM123" , "bobo")
+    # db.session.add(car_1)
+    # db.session.commit()
+
+    # ENTRY CREATE
+
+    # car_1 = Vehicle.query.filter_by(plate_num = "BBM123").first()
+    # entry_1 = Entry(plate = car_1.plate_num , entry_dtime = datetime.now().isoformat(' ', 'seconds'))
+    # db.session.add(entry_1)
+    # db.session.commit()
+
+
+    # ENTRY DELETE
+
+    # db_man.delete_all_car_entries("BBM123")
+    # db_man.delete_car_and_all_entries("BBM123")
+
+    # print(db_man.get_car_entries("TIK142")) # GET ALL ENTRIES
+
 
     # Show db_man data content
     # print(db_man.db_data)
+    # print("-----")
     # print(db_man.db_data_entries)

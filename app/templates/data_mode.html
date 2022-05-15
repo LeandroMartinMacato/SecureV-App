@@ -8,6 +8,19 @@
 
 {% block content %}
 <div id="contents">
+    {% if error == True %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> {{error_msg}} </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    {% else %}
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong> {{ message }} </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
 
     <!-- INSTRUCTIONS  -->
     <div class="alert alert-secondary alert-dismissible fade show" role="alert"  style="margin-bottom: 0px;">
@@ -15,42 +28,66 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div id="lower_container"> 
-        <table class="content-table">
-        <thead>
-            <tr>
-            <th>Id</th>
-            <th>Plate Number</th>
-            <th>Owner</th>
-            <th>Date Registered</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td> ### </td>
-                <td> ### </td>
-                <td> ### </td>
-                <td> ### </td>
-            </tr>
+    <div id="flex-content"> 
+        <div id = "flex-left-item">
+            <table class="content-table">
+            <thead>
+                <tr>
+                <th>Id</th>
+                <th>Plate Number</th>
+                <th>Owner</th>
+                <th>Date Registered</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> ### </td>
+                    <td> ### </td>
+                    <td> ### </td>
+                    <td> ### </td>
+                </tr>
 
-            <!-- ------------------------ display all item loop ------------------------ -->
-            {% for item in db_data %}
-            <tr>
-                <td> {{item["id"]}} </td>
-                <td> {{item["plate_num"]}} </td>
-                <td> {{item["owner_name"]}} </td>
-                <td> {{item["date_registered"]}} </td>
-            </tr>
-            {% endfor %}
+                <!-- ------------------------ display all item loop ------------------------ -->
+                {% for item in db_data %}
+                <tr>
+                    <td> {{item["id"]}} </td>
+                    <td> {{item["plate_num"]}} </td>
+                    <td> {{item["owner_name"]}} </td>
+                    <td> {{item["date_registered"]}} </td>
+                </tr>
+                {% endfor %}
 
-            <tr>
-                <td> ### </td>
-                <td> ### </td>
-                <td> ### </td>
-                <td> ### </td>
-            </tr>
-        </tbody>
-        </table>
+                <tr>
+                    <td> ### </td>
+                    <td> ### </td>
+                    <td> ### </td>
+                    <td> ### </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+
+        <div id = "flex-right-item">
+            <form class = "mb-3" action="#" method="post" style="margin-top:20px;">
+                <label for="labeldeleteplate" class="form-label"><b> Delete Vehicle from database</b></label>
+                <p> <input type="text" name="delete_plate_input" class="form-control"/></p>
+                <div id="deletehelp" class="form-text"> Enter Plate number to delete from the database</div>
+                <br>
+                <p> <button onclick="register_checker()" type="submit" value="submit" class="btn btn-danger">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+    function register_checker() {
+        var result = confirm("Confirm Deletion of Vehicle ?");
+        if (result == false) {
+            event.preventDefault();
+        }
+    }
+</script>
 {% endblock %}

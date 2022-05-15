@@ -38,6 +38,16 @@ hr {
 	}
 }
 
+#flex-left-item{
+	flex: 2;
+
+}
+
+#flex-right-item{
+	flex: 1;
+	margin-right: 10%;
+}
+
 #flex-inner-content {
 	display: flex;
 	flex: 1;

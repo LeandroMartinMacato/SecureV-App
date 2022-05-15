@@ -82,10 +82,6 @@ class Verificator:
         self.car_list.append(plate_num)
         print(f"Plate {plate_num} Added!")
 
-    def delete_car(self , plate_num):
-        self.car_list.remove(plate_num)
-        print("Car Deleted!")
-
     def in_car_list(self, plate_num):
         if plate_num in self.car_list:
             return True

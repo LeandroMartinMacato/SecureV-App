@@ -72,11 +72,34 @@ def request_model_switch():
         pass
     return "nothing"
 
-@application.route("/database")
+@application.route("/database" , methods=["POST","GET"])
 def data_mode():
     page_title = 'SecureV | Database Mode'
     db_man = DB_Manager()
-    return render_template("data_mode.html" , db_data = db_man.db_data, TITLE=page_title) 
+    error = False
+    error_message = ""
+
+    try:
+        if request.method =="POST":
+            session.permanent = True
+            car_to_delete = request.form["delete_plate_input"].upper()
+            if car_to_delete:
+                db_man.delete_car_and_all_entries(car_to_delete)
+                flash(f"Deleted Vehicle:  [{car_to_delete}] and all Entries ", "info")
+
+            else:
+                error = True
+                error_message = "Input Plate isn't registered or Input is empty"
+            
+            return redirect(url_for('data_mode'))
+
+            
+    except Exception as e:
+        print(f"EXCEPTION AT /database route: {e}")
+        error = True
+        error_message = "Vehicle Plate is invalid or not existing"
+
+    return render_template("data_mode.html" , db_data = db_man.db_data, TITLE=page_title , error = error , error_msg = error_message) 
 
 @application.route("/register", methods=["POST","GET"])
 def register_mode():
