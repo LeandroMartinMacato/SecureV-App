@@ -349,6 +349,10 @@ class VideoStreaming:
                         except Exception as e:
                             print("Exception: Camera Connection Lost")
                             pass
+                    else:
+                        global current_plate
+                        current_plate = "XXX-XXXX"
+
 
                 else: # if camera disabled
                     snap = np.zeros((

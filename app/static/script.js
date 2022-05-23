@@ -80,7 +80,7 @@ $(function () {
         }
         else{
           document.getElementById("gate-status-container").innerText = "Gate Status: Closed";
-          document.getElementById("gate-status-container").style.color = "red"
+          document.getElementById("gate-status-container").style.color = "#9e1c13"
           info_container_element.style.border = "6px solid #4d1210";
           info_container_element.style.borderRadius = "15px";
           is_verified = false;
@@ -109,7 +109,7 @@ $(function () {
     var option = 
     {
       animation : true,
-      delay : 5000
+      delay : 10000
     };
 
 		var toastHTMLElement = document.getElementById( 'EpicToast' );
