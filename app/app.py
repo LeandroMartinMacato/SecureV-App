@@ -23,7 +23,7 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(application)
 db_manager = DB_Manager()
 
-VIDEO = VideoStreaming()
+VIDEO = VideoStreaming(camera_src = 0)
 
 
 @application.route('/')
@@ -64,8 +64,12 @@ def video_feed():
 
 @application.route('/request_model_switch')
 def request_model_switch():
+    #TODO: On toggle OFF turn current-plate to XXX-XXXX
+    # if VIDEO.detect == True:
+    #     # current_plate = "XXX-XXXX"
+    #     object_detection.current_plate = "XXX-XXXX"
     VIDEO.detect = not VIDEO.detect
-    print('*'*10, VIDEO.detect)
+
     try:
         print("This is a return function from VideoStreaming class " + str(VIDEO.lblret))
     except:

@@ -127,15 +127,25 @@
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<!-- ------------------------- TOAST NOTIFICATION -------------------------- -->
+<div class="toast bg-success" id="EpicToast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 85%; right: 20px;">
+	<div class="toast-header">
+		<img src="static/img/toast-icon.png"   
+		alt="..."
+		style="width: 10%; height:100%; margin-right: 10px;"
+		>
+		<strong class="mr-auto"> | Entry Log Created | </strong>
+		
+	</div>
+	
+	<div class="toast-body" id="toast-body-content">
+		<div>
+			<span> New log for plate <span id="toast_plate"></span> at <span id="toast_date"></span>
+		</div>
+	</div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}
-
-<!-- <a id="use-model"> 
-	<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">On/Off</button>
-	<label class="switch">
-		<input type="checkbox">
-		<span class="slider round"></span>
-	</label>
-</a>
-<a id = "toggle-status"> Not Detecting </a> -->

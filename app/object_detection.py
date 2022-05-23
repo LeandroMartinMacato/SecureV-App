@@ -9,6 +9,7 @@ from plate_verification import Verificator
 
 verificator = Verificator()
 # pytesseract location | Put absolute path on tesseract.exe
+# tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract-4.1\tesseract.exe"
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
 
 #DEBUG PATHS
@@ -40,6 +41,7 @@ class ObjectDetection:
         np.random.seed(42)
         self.COLORS = np.random.randint(0, 255, size=(len(self.CLASSES), 3), dtype="uint8")
         self.counter = 0 # For printing once in a while counter
+        self.reset_detection_cnt = 0 # Check if no detection for awhile
 
     def detectObj(self, snap):
         height, width, channels = snap.shape 
@@ -52,6 +54,8 @@ class ObjectDetection:
         class_ids = []
         confidences = []
         boxes = []
+        self.reset_detection_cnt += 1 
+
         for out in outs:
             for detection in out:
                 scores = detection[5:] # score of detected object
@@ -89,6 +93,8 @@ class ObjectDetection:
 
                         global current_plate
                         current_plate = verificator.get_current_plate()
+                        self.reset_detection_cnt = 0 
+
                         # print(current_plate) 
                     except Exception as e:
                         ''' Except when no plate is available '''
@@ -96,7 +102,10 @@ class ObjectDetection:
                             print("Plate Detected But not in coordinate...")
                             self.counter = 0
                         print(f"Error Exception @ object_detection.py | Plate is not aligned in camera properly: {e}")
+                        current_plate = "XXX-XXXX"
                         continue
+                elif self.reset_detection_cnt == 10:
+                    current_plate = "XXX-XXXX"
 
 
         indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4) # NMS(non-maximum suppression) is for avoiding overlapping boxes
@@ -248,8 +257,22 @@ def recognize_plate(img, coords):
         cv2.imwrite(os.path.join(path_cnt, cnt_3) , roi) #cnt_save3 # DEBUG
 
         try:
-            # text = tess.image_to_string(roi , config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3') # default tesseract
-            text = tess.image_to_string(roi, lang="bestphplate", config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3') # Trained Model
+            config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 1' # Best so far
+            # config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3'
+            # config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 10 --oem 3' # psm 10
+
+            lang = "bestphplate"
+
+            text = tess.image_to_string(roi , config = config) # Default Model
+            # text = tess.image_to_string(roi, lang = lang, config = config) # Custom Model , Worst Result
+
+
+
+            # ---------------------- DEBUG: Print Every CNT OCR Letters ---------------------- #
+            # print(f"Cnt #: {cnt_counter} | Text: {text} ")
+
+            if len(text) >=2:
+                text = text[0]
 
             # clean tesseract text by removing any unwanted blank spaces
             clean_text = re.sub('[\W_]+', '', text)
@@ -269,10 +292,10 @@ def recognize_plate(img, coords):
         #========================
 
     # ----------------------- DEBUG cond count CONTINUATION ---------------------- #
-    print(f"Condition 1: {con1}")
-    print(f"Condition 2: {con2}")
-    print(f"Condition 3: {con3}")
-    print(f"Condition 4: {con4}")
+    # print(f"Condition 1: {con1}")
+    # print(f"Condition 2: {con2}")
+    # print(f"Condition 3: {con3}")
+    # print(f"Condition 4: {con4}")
 
 
     if plate_num != None:
@@ -286,15 +309,13 @@ def recognize_plate(img, coords):
 # ---------------------------------------------------------------------------- #
 #                             video streaming class                            #
 # ---------------------------------------------------------------------------- #
-class VideoStreaming(object):
-    def __init__(self):
-        super(VideoStreaming, self).__init__()
-        self.VIDEO = cv2.VideoCapture(0) # video input
+class VideoStreaming:
+    def __init__(self , camera_src):
+        self.VIDEO = cv2.VideoCapture(camera_src) # video input
         self.MODEL = ObjectDetection() # MODEL is the ObjectDetection Class
         self._preview = True
         self._detect = False
 
-    # Getter setter functions
     @property
     def preview(self):
         return self._preview
@@ -325,7 +346,8 @@ class VideoStreaming(object):
                             # ---------------------------------- DEBUG: ---------------------------------- #
                             # print(self.MODEL.lbl) # PRINT CLASS NAME
                             #========
-                        except:
+                        except Exception as e:
+                            print("Exception: Camera Connection Lost")
                             pass
 
                 else: # if camera disabled
@@ -338,6 +360,8 @@ class VideoStreaming(object):
                     font = cv2.FONT_HERSHEY_PLAIN
                     color = (255,255,255)
                     cv2.putText(snap, label, (W//2 - 100, H//2), font, 2, color, 2)
+
+                    return snap # Not sure
                 
                 frame = cv2.imencode('.jpg', snap)[1].tobytes()
                 yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
@@ -345,4 +369,4 @@ class VideoStreaming(object):
 
             else:
                 break
-        print('off')
+        print('Error: Camera is Off | Not Detected')
