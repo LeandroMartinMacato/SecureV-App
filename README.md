@@ -84,7 +84,7 @@ pip install -r requirements.txt
 tess.pytesseract.tesseract_cmd = r"E:\Programming_Files\OCR-Tesseract\tesseract.exe"
 ```
 
-#### 4.2 Download Tesseract Trained Model on FE-Schrift Font and place in tesseract installation folder
+##### 4.2 [OPTIONAL] Download Tesseract Trained Model on FE-Schrift Font and place in tesseract installation folder
 
 [Download: Custom Trained Tesseract Model](https://drive.google.com/file/d/1CYN4XOAJe12P-UShk3tn4LZSMgvIFnjs/view?usp=sharing)
 
