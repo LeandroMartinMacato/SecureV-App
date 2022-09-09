@@ -14,7 +14,7 @@
     - [3. Download YOLOv4 Model and Place inside directory](#3-download-yolov4-model-and-place-inside-directory)
     - [4. Install Tesseract on local machine](#4-install-tesseract-on-local-machine)
       - [4.1 Set tesseract.exe path in object_detection.py file](#41-set-tesseractexe-path-in-object_detectionpy-file)
-      - [4.2 Download Tesseract Trained Model on FE-Schrift Font and place in tesseract installation folder](#42-download-tesseract-trained-model-on-fe-schrift-font-and-place-in-tesseract-installation-folder)
+        - [4.2 [OPTIONAL] Download Tesseract Trained Model on FE-Schrift Font and place in tesseract installation folder](#42-optional-download-tesseract-trained-model-on-fe-schrift-font-and-place-in-tesseract-installation-folder)
     - [5. Run Flask Server](#5-run-flask-server)
   - [Screenshots](#screenshots)
   - [License & Copyright](#license--copyright)
@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 ### 3. Download YOLOv4 Model and Place inside directory
 
-[Download: YOLOv4 Weights](https://drive.google.com/file/d/15PGJ8fvPZA2qOLaNVrRryJU7X-QXEa1H/view?usp=sharing)
+[Download: YOLOv4 Weights](https://drive.google.com/file/d/1Ksddh6_NI4Nim0F1AvPXqF8y07jwX_AW/view?usp=sharing)
 
 - Place yolov4.weights in
 
